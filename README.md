@@ -12,7 +12,7 @@ This card is one of the 6600 XT cheapest even though it can still be considered 
 
 The main components of my computer are Z390 Aorus Elite board and Intel i9-9900K CPU.
 
-### Current macOS status of AMD 6000 series graphics cards is:
+Current macOS status of AMD 6000 series graphics cards is:
 
 Working on macOS
 - Family Navi 21: 6800, 6800 XT and 6900 XT (since Big Sur 11.4)
