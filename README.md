@@ -34,8 +34,6 @@ Installation on macOS is very simple. The same EFI with OpenCore 0.7.8 (Lilu and
 
 The card is well recognized as seen in System profile.
 
-![System Profiler](sysprof.png?raw=true)
-
 ### Working on macOS
 
 Overall performance is very good, smooth, with 2560x1440 resolution at 60Hz on a 4K monitor. The score in the GeekBench 5 test is around 60% higher than the RX580 (around **80000** vs **50000**).
@@ -70,3 +68,44 @@ AMD Radeon  6600 cards support ReBAR. To activate this feature you must:
 I have tested the card with ReBAR on and off and I have not noticed any difference. GeekBench 5 test scores on macOS and FurMark on Windows have been virtually identical.
 It is likely that with a CPU of 10th generation or newer and games of big graphic demand the performance will improve with ReBAR enabled but, at least in my system, there is no gain in it.
 
+## Zero RPM and Monterey 12.3
+
+### Zero RPM
+
+By default, fans of the RX 6600 XT card (like other AMD models) are stopped below 60º, it is what is known as Zero RPM. This has as main advantage the absence of noise except when there is a high graphic requirement.
+
+Users who have this card in a Hackintosh with dual boot have observed that temperature, with idle system, is usually 10-15º lower in Windows than in macOS (35-40º vs 50º). In both systems Zero RPM keeps fans stopped until 60º is reached.
+
+On Windows it is easy to enable/disable Zero RPM from the Radeon software that has this option in custom settings. But on macOS there is no such possibility. So far, existing option to disable Zero RPM in macOS is the creation on Windows, from the AMD card ROM, of a SoftPowerPlayTable (sPPT) (contains the graphics card settings in the form of a hexadecimal value) that OpenCore can load into DeviceProperties. If the sPPT is saved in Windows after disabling Zero RPM, macOS when loading the sPPT also works with Zero RPM disabled. But it is a complex task that requires specific programs and is not within the reach of the inexperienced user.
+
+### AMD 5000 and 6000 in Monterey 12.3
+
+The release of macOS Monterey 12.3 has broken the operation of Radeon 5000 and 6000 families, not in all cases but in quite a few of them judging by comments posted on the forums. This problem has also happened on real Macs but it seems to be more much more frequent on Hackintosh. 5500, 5700, 6800 and 6900 models (XT and non XT) have been most affected. 6600 models (XT and non XT) seem to be free of the issue that manifests itself in a very evident drop in graphic performance after updating to 12.3, in some cases the system becomes unusable and in other cases a big part of the graphic power is simply lost.
+
+My GPU is RX 6600 XT so it has not been affected by this issue.
+
+Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But on AMDRadeonX6000Framebuffer.kext (in its Info.plist file) AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
+The patch is added in this way:
+
+On Windows it is easy to enable/disable Zero RPM from the Radeon software that has this option in custom settings. But on macOS there is no such possibility. So far, existing option to disable Zero RPM in macOS is the creation on Windows, from the AMD card ROM, of a SoftPowerPlayTable (sPPT) (contains the graphics card settings in the form of a hexadecimal value) that OpenCore can load into DeviceProperties. If the sPPT is saved in Windows after disabling Zero RPM, macOS when loading the sPPT also works with Zero RPM disabled. But it is a complex task that requires specific programs and is not within the reach of the inexperienced user.
+```
+<key>DeviceProperties</key>
+    <dict>
+        <key>Add</key>
+        <dict>
+            <key>PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)</key>
+            <dict>
+                <key>@0,name</key>
+                <string>ATY,Henbury</string>
+                <key>@1,name</key>
+                <string>ATY,Henbury</string>
+                <key>@2,name</key>
+                <string>ATY,Henbury</string>
+                <key>@3,name</key>
+                <string>ATY,Henbury</string>
+            </dict>
+        </dict>
+        <key>Delete</key>
+        <dict/>
+    </dict>
+```
