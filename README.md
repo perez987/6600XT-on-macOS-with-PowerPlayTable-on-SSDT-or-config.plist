@@ -1,8 +1,9 @@
 # XFX RX 6600 XT graphics card in macOS Monterey 12.2.1
 
-**XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6**
-
-![RX 6600 XT](xfx-6600xt.png?raw=true)
+<table>
+ <tr><td>**XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6**</td></tr>
+ <tr><td><img src="xfx-6600xt.png">
+</table>
 
 ### Preface
 
@@ -88,6 +89,18 @@ Solutions have been proposed to fix this. The simplest is to add in DeviceProper
 The patch is added in this way:
 
 On Windows it is easy to enable/disable Zero RPM from the Radeon software that has this option in custom settings. But on macOS there is no such possibility. So far, existing option to disable Zero RPM in macOS is the creation on Windows, from the AMD card ROM, of a SoftPowerPlayTable (sPPT) (contains the graphics card settings in the form of a hexadecimal value) that OpenCore can load into DeviceProperties. If the sPPT is saved in Windows after disabling Zero RPM, macOS when loading the sPPT also works with Zero RPM disabled. But it is a complex task that requires specific programs and is not within the reach of the inexperienced user.
+ 
+### AMD 5000 and 6000 in Monterey 12.3
+
+The release of macOS Monterey 12.3 has broken the operation of Radeon 5000 and 6000 series, not in all cases but in quite a few of them judging by comments posted on the forums. This problem has also happened on real Macs but it seems to be more much more frequent on Hackintosh. 5500, 5700, 6800 and 6900 models (XT and non XT) have been most affected. 6600 models (XT and non XT) seem to be free of the issue that manifests itself in a very evident drop in graphic performance after updating to 12.3, in some cases the system becomes unusable and in other cases a big part of the graphic power is simply lost.
+
+My GPU is RX 6600 XT so it has not been affected by this issue.
+
+Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But on AMDRadeonX6000Framebuffer.kext (in its Info.plist file) AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
+ 
+The patch is added in this way:
+ 
+ 
 ```
 <key>DeviceProperties</key>
     <dict>
@@ -109,3 +122,19 @@ On Windows it is easy to enable/disable Zero RPM from the Radeon software that h
         <dict/>
     </dict>
 ```
+
+Note: PCI path to the GPU may be the same on your system but it is convenient to check it with Hackintool (app) or gfxutil (Terminal utility).
+
+### Patch and Zero RPM
+
+Although my GPU has not been affected by this Monterey 12.3 issue, I have tried the patch motivated by curiosity to check if the card works differently (better or worse). When booting with the patch, it gets my attention that the GPU temperature is, with idle system, 10-15º below the usual 50º. The cause is in the deactivation of the Zero RPM feature: fans spin all the time with a small drawback that is the noise generated (very low volume, almost imperceptible except in quiet environment).
+
+Graphics performance is good with the patch. GeekBench 5 metal scores are lower but in other benchmarks such as Unigine Valley they are identical in both cases. Maximum temperature when forcing the GPU has not changed, about 80-82º, the same as without the patch. But basic temperature at iddle system ranges from 35 to 40º. Sensations when performing common tasks on macOS are the same (excellent) with or without patch. 
+
+Unexpectedly, I have seen a new way to disable Zero RPM in macOS, it is easier to implement than creating sPPT in Windows and its subsequent transfer to macOS.
+
+It's up to you to choose what you prefer.
+ 
+- Without patch, base temperature is around 50º, fans are usually stopped and GeekBench 5 score is higher.
+- With patch, base temperature is below 40º, fans are always running although the noise produced is very low and GeekBench 5 score is lower.
+ 
