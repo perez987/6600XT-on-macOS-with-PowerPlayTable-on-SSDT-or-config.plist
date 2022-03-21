@@ -24,7 +24,7 @@ NOT working on macOS
 
 Of course 6800 and 6900 series are clearly more powerful than the 6600 but their current market price is very high. The 6600 XT has higher performance than the 6600 and this model of XFX can now be found for a price of around 500-550 €.
 
-The card is long size but no longer than the XFX RX580 it will replace. Surprisingly, it's even slightly lighter, probably because of the metal housing that the RX580 incorporates. Requires 8 pin power connector and recommended power supply is at least 600-650W. It has 4 DisplayPort ports and 1 HDMI port.
+The card is long size but no longer than the XFX RX 580 it will replace. Surprisingly, it's even slightly lighter, probably because of the metal housing that the RX580 incorporates. Requires 8 pin power connector and recommended power supply is at least 600-650W. It has 4 DisplayPort ports and 1 HDMI port.
 
 ### Installation
 
