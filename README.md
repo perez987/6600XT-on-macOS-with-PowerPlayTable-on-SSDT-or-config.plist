@@ -1,7 +1,7 @@
 # XFX RX 6600 XT graphics card in macOS Monterey 12.2.1
 
 <table>
- <tr><td>**XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6**</td></tr>
+ <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
  <tr><td><img src="xfx-6600xt.png">
 </table>
 
