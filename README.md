@@ -128,7 +128,7 @@ It's up to you to choose what you prefer.
  
 ### Framebuffers
  
-This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not to disable Zero RPM. Framebuffers are different for each series:
+This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not to disable Zero RPM. Framebuffers are different for each serie:
 
 - 5500 Python
 - 5700 Adder
