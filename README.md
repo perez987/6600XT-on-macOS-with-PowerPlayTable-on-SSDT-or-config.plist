@@ -86,9 +86,6 @@ The release of macOS Monterey 12.3 has broken the operation of Radeon 5000 and 6
 My GPU is RX 6600 XT so it has not been affected by this issue.
 
 Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But on AMDRadeonX6000Framebuffer.kext (in its Info.plist file) AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
-The patch is added in this way:
-
-Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But on AMDRadeonX6000Framebuffer.kext (in its Info.plist file) AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
  
 The patch is added in this way:
  
