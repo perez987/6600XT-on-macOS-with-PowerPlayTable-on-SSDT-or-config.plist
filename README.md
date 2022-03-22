@@ -85,10 +85,9 @@ The release of macOS Monterey 12.3 has broken the operation of Radeon 5000 and 6
 
 My GPU is RX 6600 XT so it has not been affected by this issue.
 
-Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But on AMDRadeonX6000Framebuffer.kext (in its Info.plist file) AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
+Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But, in `AMDRadeonX6000Framebuffer.kext >> Contents >> Info.plist`, AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
  
-The patch is added in this way:
- 
+The patch is added in this way: 
  
 ```
 <key>DeviceProperties</key>
@@ -124,6 +123,18 @@ Unexpectedly, I have seen a new way to disable Zero RPM in macOS, it is easier t
 
 It's up to you to choose what you prefer.
  
-- Without patch, base temperature is around 50º, fans are usually stopped and GeekBench 5 score is higher.
-- With patch, base temperature is below 40º, fans are always running although the noise produced is very low and GeekBench 5 score is lower.
+- Without patch: base temperature is around 50º, fans are usually stopped and GeekBench 5 score is higher.
+- With patch: base temperature is below 40º, fans are always running although the noise produced is very low and GeekBench 5 score is lower.
+ 
+### Framebuffers
+ 
+This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not to disable Zero RPM. Framebuffers are different for each series:
+
+- 5500 Python
+- 5700 Adder
+- 6600 Henbury
+- 6800 Belknap
+- 6900 Carswell.
+
+These framebuffers are extracted from `AMDRadeonX6000Framebuffer.kext >> Contents >> Info.plist`.
  
