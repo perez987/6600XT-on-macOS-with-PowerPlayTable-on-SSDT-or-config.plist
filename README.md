@@ -117,7 +117,7 @@ Note: PCI path to the GPU may be the same on your system but it is convenient to
 
 Although my GPU has not been affected by this Monterey 12.3 issue, I have tried the patch motivated by curiosity to check if the card works differently (better or worse). When booting with the patch, it gets my attention that the GPU temperature is, with idle system, 10-15º below the usual 50º. The cause is in the deactivation of the Zero RPM feature: fans spin all the time with a small drawback that is the noise generated (very low volume, almost imperceptible except in quiet environment).
 
-Graphics performance is good with the patch. GeekBench 5 metal scores are lower but in other benchmarks such as Unigine Valley they are identical in both cases. Maximum temperature when forcing the GPU has not changed, about 80-82º, the same as without the patch. But basic temperature at iddle system ranges from 35 to 40º. Sensations when performing common tasks on macOS are the same (excellent) with or without patch. 
+Graphics performance is good with the patch. GeekBench 5 metal scores are lower but in other benchmarks such as Unigine Valley or GFXBench Metal they are almost identical. Maximum temperature when forcing the GPU has not changed, about 80-82º, the same as without the patch. But basic temperature at iddle system ranges from 35 to 40º. Sensations when performing common tasks on macOS are the same (excellent) with or without patch. 
 
 Unexpectedly, I have seen a new way to disable Zero RPM in macOS, it is easier to implement than creating sPPT in Windows and its subsequent transfer to macOS.
 
