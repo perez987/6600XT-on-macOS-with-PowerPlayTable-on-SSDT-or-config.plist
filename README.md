@@ -128,13 +128,32 @@ It's up to you to choose what you prefer.
  
 ### Framebuffers
  
-This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not only to disable Zero RPM. Framebuffers are different for each serie:
+This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not only to disable Zero RPM.
+ 
+Framebuffers available in AMDRadeonX6000Framebuffer.kext >> Contents >> Info.plist.
+ 
+*5700* - Navi 10
+AMDRadeonNavi10Controller
+device-id: 0x73101002 0x73121002 0x73181002 0x73191002 0x731A1002 0x731B1002 0x731F1002 0x73BF1002
+framebuffer: ATY,Adder / ATY,Ikaheka
+ 
+*5600* - Navi 12
+AMDRadeonNavi12Controller
+device-id: 0x73601002 0x73621002
+framebuffer: ATY,Sunbeam
 
-- 5500 Python
-- 5700 Adder
-- 6600 Henbury
-- 6800 Belknap
-- 6900 Carswell.
+*5500* - Navi 14
+AMDRadeonNavi14Controller
+device-id: 0x73401002 0x73411002 0x73431002 0x73471002 0x734F1002
+framebuffer: ATY,Python / ATY,Keelback / ATY,Boa
 
-These framebuffers are extracted from `AMDRadeonX6000Framebuffer.kext >> Contents >> Info.plist`.
+*6800* and *6900* - Navi 21
+AMDRadeonNavi21Controller
+device-id: 0x73A01002 0x73A21002 0x73A31002 0x73AB1002 0x73AE1002 0x73AF1002 0x73BF1002
+framebuffer: ATY,Belknap / ATY,Carswell / ATY,Deepbay
+
+*6600* - Navi 23
+AMDRadeonNavi23Controller
+device-id: 0x73E31002 0x73FF1002 0x73E01002
+framebuffer: ATY,Henbury
  
