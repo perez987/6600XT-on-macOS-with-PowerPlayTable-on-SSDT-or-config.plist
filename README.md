@@ -1,4 +1,4 @@
-# XFX RX 6600 XT graphics card in macOS Monterey 12.2.1
+# XFX RX 6600 XT on macOS and Zero RPM with SoftPowerPlayTable
 
 <table>
  <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
@@ -78,6 +78,72 @@ By default, fans of the RX 6600 XT card (like other AMD models) are stopped belo
 Users who have this card in a Hackintosh with dual boot have observed that temperature, with idle system, is usually 10-15º lower in Windows than in macOS (35-40º vs 50º). In both systems Zero RPM keeps fans stopped until 60º is reached.
 
 On Windows it is easy to enable/disable Zero RPM from the Radeon software that has this option in custom settings. But on macOS there is no such possibility. So far, existing option to disable Zero RPM in macOS is the creation on Windows, from the AMD card ROM, of a SoftPowerPlayTable (sPPT) (contains the graphics card settings in the form of a hexadecimal value) that OpenCore can load into DeviceProperties. If the sPPT is saved in Windows after disabling Zero RPM, macOS when loading the sPPT also works with Zero RPM disabled. But it is a complex task that requires specific programs and is not within the reach of the inexperienced user.
+ 
+### AMD PowerPlay
+ 
+AMD's PowerPlay technology allows the graphics card to vary its performance according to demand, switching between high performance and maximum energy savings. It has automatic operating modes according to predefined parameters and also allows user settings. Windows 10 and 11 can make a copy of these power profiles in the form of a registry key called SoftPowerPlayTables (sPPT onwards) whose value is a long hexadecimal string. It is a way to have a quick reference by the operating system. This sPPT key can be read and modified by some utilities. Thanks to this, it is possible to modify operation's parameters of the Radeon by changing its behavior and its power management.
+ 
+### Zero RPM
+ 
+AMD Radeon cards of 5000 and 6000 series come from factory with the Zero RPM function activated so that fans are stopped below a temperature (usually 60º), this makes them completely silent except when the graphics processor is required (tests, games, etc.). As for the RX 6600 and 6600 XT models, it has been commented that, in macOS, they usually work at higher base temperature than in Windows, approximately 10-15º. On my PC, for example, the base temperature on Windows is 35-40º and on macOS it is 50-55º. Although these are perfectly valid safe temperatures for daily use, some users would prefer to have values similar to those of Windows.
+
+The fastest and most effective way to achieve this is by deactivating the Zero RPM function so that fans are spinning all the time and not just above a predefined temperature. However, this is very simple to do on Windows with the Radeon software but on macOS there is no such option.
+
+### SoftPowerPlayTable
+
+One way to disable Zero RPM on macOS without changing any other parameters is using sPPT. It is a more complex method than the patch for Monterey 12.3 but it has the advantage that the GPU behavior, including GeekBench 5 scores, do not change.
+To obtain the sPPT you have to go on Windows, where the registry key is generated and exported to a file that we take to macOS, here the file is modified and a new property is added to the OpenCore config.plist file.
+
+#### Phase 1 on Windows
+
+We need 2 programs:
+ 
+- GPU-Z (from TechPowerUp Loads the firmware (vBIOS = video BIOS) of the graphics card and exports it to a file that can be read by MorePowerTool.
+- MorePowerTool (MPT) (from Igor'sLAB Reads the rom file and handles the registry key PP_PhmSoftPowerPlayTable (deleting existing or creating new).
+
+GPU-Z loads the specifications and settings of the GPU and exports everything to a file. To export (Graphics Card tab) the arrow icon coming out of the rectangle under the AMD Radeon logo is used. In the Advanced tab you have to note the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when searching for the sPPT key in the Windows registry.
+ 
+MPT is where the task of generating the sPPT with Zero RPM disabled and writing it to the registry is performed.
+
+- At the top, choose the GPU model, it usually shows at the beginning of the name the bus number that we wrote down earlier (3 in this case).
+- It is recommended to delete the table that may have existed before >> Delete SPPT button.
+- Load the previously generated rom file from GPU-Z.
+- Modify the Zero RPM option by unchecking the checkbox in 2 places: Features tab and Fan tab.
+- Write the new table to the registry (Write SPPT button): the registry key is called PP_PhmSoftPowerPlayTable and is located in
+`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class{4d36e968-e325-11ce-bfc1-08002be10318}\`
+There are several numbered keys here, choose the one that matches the bus number that you have written down from before: `0003\PP_PhmSoftPowerPlayTable`. With the 003 key selected, export it as reg file, not as txt file. File structure is different in each case and I have seen that it is easier to edit the reg file. Regedit exports the complete 003 key, I have not found a way to export only the PP_PhmSoftPowerPlayTable key. Change the file extension from reg to txt and save it in a place accessible from macOS.
+
+ #### Phase 2 on macOS
+
+Fix the text file to be able to use it in OpenCore. I have used BBEdit but any app capable of editing plain unformatted text can do.
+
+- Select the block starting with `"PP_PhmSoftPowerPlayTable"=` removing the rest of the text.
+- Also delete `"PP_PhmSoftPowerPlayTable"=hex:` leaving only the hexadecimal string composed of several lines.
+- Find and replace:
+	- remove commas
+	- remove spaces at the beginning of the lines
+	- remove backslash (\) at the lines
+	- remove line breaks to get a single-line string, you have to use Grep for this in the Find and Replace dialog.
+
+Text before the tweak is like this (not the whole string is displayed, only a part):
+
+> "PP_PhmSoftPowerPlayTable"=hex:a6,09,12,00,02,22,03,ae,09,00,00,22,43,00,00,83,&bsol;
+>  &nbsp;&nbsp;00,18,00,00,00,1c,00,00,00,00,00,00,76,00,00,00,00,00,00,00,00,00,00,00,00,&bsol;
+>  &nbsp;&nbsp;00,01,00,00,00,01,00,00,00,0d,00,00,00,52,0b,00,00,00,05,00,00,e8,03,00,00,&bsol;
+
+After the tweak is like this:
+
+> a6091200022203ae090000224300008300180000001c000000000000760000000000000000000000000001000000010000000d000000520b000000050000e8030000
+
+It is necessary to know the PCI path to the graphics card, it can be done with the gfxutil tool (Terminal) or from Hackintool in the PCIe tab. So you get the PCI path which in my case is this:
+`PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`
+Note: Device Name and Device Path may be different on your system.
+
+Open the config.plist file, look for \
+`DeviceProperties >> Add >> PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`\
+and add the PP_PhmSoftPowerPlayTable key, its value as Data is the long text string.
+ 
+Restart. If everything went well, you will see that fans are running all the time with a very low sound, base temperature rarely exceeds 35º and performance of the GPU and scores in tests have not changed.
 
 ### AMD 5000 and 6000 in Monterey 12.3
 
@@ -113,7 +179,7 @@ The patch is added in this way:
 
 Note: PCI path to the GPU may be the same on your system but it is convenient to check it with Hackintool (app) or gfxutil (Terminal utility).
 
-### Patch and Zero RPM
+#### Patch and Zero RPM
 
 Although my GPU has not been affected by this Monterey 12.3 issue, I have tried the patch motivated by curiosity to check if the card works differently (better or worse). When booting with the patch, it gets my attention that the GPU temperature is, with idle system, 10-15º below the usual 50º. The cause is in the deactivation of the Zero RPM feature: fans spin all the time with a small drawback that is the noise generated (very low volume, almost imperceptible except in quiet environment).
 
@@ -126,7 +192,7 @@ It's up to you to choose what you prefer.
 - Without patch: base temperature is around 50º, fans are usually stopped and GeekBench 5 score is higher.
 - With patch: base temperature is below 40º, fans are always running although the noise produced is very low and GeekBench 5 score is lower.
  
-### Framebuffers
+#### Framebuffers
  
 This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not only to disable Zero RPM.
  
