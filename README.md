@@ -150,8 +150,12 @@ Note: Device Name and Device Path may be different on your system.
 Open the config.plist file, look for \
 `DeviceProperties >> Add >> PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`\
 and add the PP_PhmSoftPowerPlayTable key, its value as Data is the long text string.
+	
+<img src="sppt3.png">
  
 Restart. If everything went well, you will see that fans are running all the time with a very low sound, base temperature rarely exceeds 35º and performance of the GPU and scores in tests have not changed.
+
+<img src="sppt4.png">
 
 ### AMD 5000 and 6000 in Monterey 12.3
 
