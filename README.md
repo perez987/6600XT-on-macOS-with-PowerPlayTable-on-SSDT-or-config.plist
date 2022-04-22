@@ -102,6 +102,10 @@ We need 2 programs:
 - MorePowerTool (MPT) (from Igor'sLAB Reads the rom file and handles the registry key PP_PhmSoftPowerPlayTable (deleting existing or creating new).
 
 GPU-Z loads the specifications and settings of the GPU and exports everything to a file. To export (Graphics Card tab) the arrow icon coming out of the rectangle under the AMD Radeon logo is used. In the Advanced tab you have to note the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when searching for the sPPT key in the Windows registry.
+
+<img src="sppt1.png">
+	
+<img src="sppt2.png">
  
 MPT is where the task of generating the sPPT with Zero RPM disabled and writing it to the registry is performed.
 
@@ -112,6 +116,10 @@ MPT is where the task of generating the sPPT with Zero RPM disabled and writing 
 - Write the new table to the registry (Write SPPT button): the registry key is called PP_PhmSoftPowerPlayTable and is located in
 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class{4d36e968-e325-11ce-bfc1-08002be10318}\`
 There are several numbered keys here, choose the one that matches the bus number that you have written down from before: `0003\PP_PhmSoftPowerPlayTable`. With the 003 key selected, export it as reg file, not as txt file. File structure is different in each case and I have seen that it is easier to edit the reg file. Regedit exports the complete 003 key, I have not found a way to export only the PP_PhmSoftPowerPlayTable key. Change the file extension from reg to txt and save it in a place accessible from macOS.
+	
+<img src="sppt5.png">
+	
+<img src="sppt6.png">
 
  #### Phase 2 on macOS
 
