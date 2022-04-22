@@ -2,7 +2,7 @@
 
 <table>
  <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
- <tr><td><img src="XFX-6600XT.png">
+ <tr><td align=center><img src="XFX-6600XT.png">
 </table>
 
 ### Preface
