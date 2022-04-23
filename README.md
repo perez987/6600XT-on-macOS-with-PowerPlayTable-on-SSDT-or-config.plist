@@ -162,8 +162,6 @@ Restart. If everything went well, you will see that fans are running all the tim
 
 The release of macOS Monterey 12.3 has broken the operation of Radeon 5000 and 6000 families, not in all cases but in quite a few of them judging by comments posted on the forums. This problem has also happened on real Macs but it seems to be more much more frequent on Hackintosh. 5500, 5700, 6800 and 6900 models (XT and non XT) have been most affected. 6600 models (XT and non XT) seem to be free of the issue that manifests itself in a very evident drop in graphic performance after updating to 12.3, in some cases the system becomes unusable and in other cases a big part of the graphic power is simply lost.
 	
-**Note**: Monterey **12.3.1** seems to have fixed this problem. 
-
 My GPU is RX 6600 XT so it has not been affected by this issue.
 
 Solutions have been proposed to fix this. The simplest is to add in DeviceProperties of config.plist some properties that set  Henbury framebuffer for each of the 4 ports of this GPU. By default Radeon framebuffer (ATY,Radeon) is loaded. But, in `AMDRadeonX6000Framebuffer.kext >> Contents >> Info.plist`, AMDRadeonNavi23Controller has "ATY,Henbury" and 6600 series are Navi 23. This is why this framebuffer is specifically proposed.
@@ -206,7 +204,9 @@ It's up to you to choose what you prefer.
  
 - Without patch: base temperature is around 50º, fans are usually stopped and GeekBench 5 score is higher.
 - With patch: base temperature is below 40º, fans are always running although the noise produced is very low and GeekBench 5 score is lower.
- 
+	
+**Note**: Monterey **12.3.1** seems to have fixed this problem. 
+
 #### Framebuffers
  
 This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not only to disable Zero RPM.
