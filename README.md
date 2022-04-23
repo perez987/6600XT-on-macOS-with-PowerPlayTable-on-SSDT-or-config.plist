@@ -15,13 +15,14 @@ The main components of my computer are Z390 Aorus Elite board and Intel i9-9900K
 
 Current macOS status of AMD 6000 series graphics cards is:
 
-Working on macOS
-- Family Navi 21: 6800, 6800 XT and 6900 XT (since Big Sur 11.4)
-- Family Navi 23: 6600 and 6600 XT (since Monterey 12.1).
-
-NOT working on macOS
-- Family Navi 22: 6700 XT
-- Family Navi 24: 6400, 6500 and 6500 XT.
+<table>
+	<tr><td>Working on macOS</td></tr>
+	<tr><td>Family Navi 21</td><td>6800, 6800 XT and 6900 XT (since Big Sur 11.4)</td></tr>
+	<tr><td>Family Navi 23</td><td>6600 and 6600 XT (since Monterey 12.1)</td></tr>
+	<tr><td>NOT working on macOS</td></tr>
+	<tr><td>Family Navi 22</td><td>6700 XT</td></tr>
+	<tr><td>Family Navi 24</td><td>6400, 6500 and 6500 XT</td></tr>
+</table>
 
 Of course 6800 and 6900 series are clearly more powerful than the 6600 but their current market price is very high. The 6600 XT has higher performance than the 6600 and this model of XFX can now be found for a price of around 500-550 €.
 
@@ -209,29 +210,25 @@ It's up to you to choose what you prefer.
 This patch can be applied to the other Radeon models affected by the Monterey 12.3 issue to fix that bad behaviour and not only to disable Zero RPM.
  
 Framebuffers available in AMDRadeonX6000Framebuffer.kext >> Contents >> Info.plist.
- 
-**5700** - Navi 10\
-AMDRadeonNavi10Controller\
-device-id: 0x73101002 0x73121002 0x73181002 0x73191002 0x731A1002 0x731B1002 0x731F1002 0x73BF1002\
-framebuffer: ATY,Adder / ATY,Ikaheka.
- 
-**5600** - Navi 12\
-AMDRadeonNavi12Controller\
-device-id: 0x73601002 0x73621002\
-framebuffer: ATY,Sunbeam.
 
-**5500** - Navi 14\
-AMDRadeonNavi14Controller\
-device-id: 0x73401002 0x73411002 0x73431002 0x73471002 0x734F1002\
-framebuffer: ATY,Python / ATY,Keelback / ATY,Boa.
-
-**6800** and *6900* - Navi 21\
-AMDRadeonNavi21Controller\
-device-id: 0x73A01002 0x73A21002 0x73A31002 0x73AB1002 0x73AE1002 0x73AF1002 0x73BF1002\
-framebuffer: ATY,Belknap / ATY,Carswell / ATY,Deepbay.
-
-**6600** - Navi 23\
-AMDRadeonNavi23Controller\
-device-id: 0x73E31002 0x73FF1002 0x73E01002\
-framebuffer: ATY,Henbury.
- 
+<table>
+	<tr><td><b>5700</b> - Navi 10 - AMDRadeonNavi10Controller</td></tr>
+	<tr><td>device-id: 0x73101002 0x73121002 0x73181002 0x73191002 0x731A1002 0x731B1002 0x731F1002 0x73BF1002</td></tr>
+	<tr><td>framebuffer: ATY,Adder / ATY,Ikaheka</td></tr>
+	<tr><td height="24"></td></tr>
+	<tr><td><b>5600</b> - Navi 12 - AMDRadeonNavi12Controller</td></tr>
+	<tr><td>device-id: 0x73601002 0x73621002</td></tr>
+	<tr><td>framebuffer: ATY,Sunbeam</td></tr>
+	<tr><td height="24"></td></tr>
+	<tr><td><b>5500</b> - Navi 14 - AMDRadeonNavi14Controller</td></tr>
+	<tr><td>device-id: 0x73401002 0x73411002 0x73431002 0x73471002 0x734F1002</td></tr>
+	<tr><td>framebuffer: ATY,Python / ATY,Keelback / ATY,Boa</td></tr>
+	<tr><td height="24"></td></tr>
+	<tr><td><b>6800</b> and <b>6900</b> - Navi 21 - AMDRadeonNavi21Controller</td></tr>
+	<tr><td>device-id: 0x73A01002 0x73A21002 0x73A31002 0x73AB1002 0x73AE1002 0x73AF1002 0x73BF1002</td></tr>
+	<tr><td>framebuffer: ATY,Belknap / ATY,Carswell / ATY,Deepbay</td></tr>
+	<tr><td height="24"></td></tr>
+	<tr><td><b>6600</b> - Navi 23 - AMDRadeonNavi23Controller</td></tr>
+	<tr><td>device-id: 0x73E31002 0x73FF1002 0x73E01002</td></tr>
+	<tr><td>framebuffer: ATY,Henbury</td></tr>
+</table>
