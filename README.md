@@ -168,7 +168,7 @@ Solutions have been proposed to fix this. The simplest is to add in DeviceProper
  
 The patch is added in this way: 
  
-```
+``` xml
 <key>DeviceProperties</key>
     <dict>
         <key>Add</key>
