@@ -117,6 +117,8 @@ MPT is where the task of generating the sPPT with Zero RPM disabled and writing 
 - Write the new table to the registry (Write SPPT button): the registry key is called PP_PhmSoftPowerPlayTable and is located in
 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\`
 There are several numbered keys here, choose the one that matches the bus number that you have written down from before: `0003\PP_PhmSoftPowerPlayTable`. With the `0003` key selected, export it as reg file, not as txt file. File structure is different in each case and I have seen that it is easier to edit the reg file. Regedit exports the complete `0003` key, I have not found a way to export only the PP_PhmSoftPowerPlayTable key. Change the file extension from reg to txt and save it in a place accessible from macOS.
+
+Note: We don't need to access to the Registry to find the PhmSoftPowerPlayTable value. The "Save" button will export the registry file which includes PhmSoftPowerPlayTable value inside. (thanks @taruyato)
 	
 <img src="MorePoweTool-1.png">
 	
