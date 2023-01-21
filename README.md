@@ -162,7 +162,7 @@ Restart. If everything went well, you will see that fans are running all the tim
 
 ---
 
-### AMD 5000 and 6000 in Monterey 12.3 (obsolete)
+### AMD 5000 and 6000 performance issue in Monterey 12.3 (fixed in Monterey **12.3.1**)
 
 The release of macOS Monterey 12.3 has broken the operation of Radeon 5000 and 6000 families, not in all cases but in quite a few of them judging by comments posted on the forums. This problem has also happened on real Macs but it seems to be more much more frequent on Hackintosh. 5500, 5700, 6800 and 6900 models (XT and non XT) have been most affected. 6600 models (XT and non XT) seem to be free of the issue that manifests itself in a very evident drop in graphic performance after updating to 12.3, in some cases the system becomes unusable and in other cases a big part of the graphic power is simply lost.
 	
@@ -236,6 +236,3 @@ Framebuffers available in AMDRadeonX6000Framebuffer.kext >> Contents >> Info.pli
 	<tr><td>device-id: 0x73E31002 0x73FF1002 0x73E01002</td></tr>
 	<tr><td>framebuffer: ATY,Henbury</td></tr>
 </table>
-	
-**Note**: Monterey **12.3.1** seems to have fixed this issue. 
-
