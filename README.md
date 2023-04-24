@@ -13,6 +13,8 @@ There is a way to recover the lost function. When modifying the vBIOS file in Wi
 
 I have tried setting Start Temperature to 40º and Stop temperature to 35º, I have created the new registry key (Write SPPT) and I have exported it to the OpenCore config.plist file. With this modification, in macOS the fans spin and stop with the GPU temperature varying between 35 and 40º, achieving a result similar to what was lost. Performance in GeekBench 6 is as expected, 98,000 – 114,000 with an RX 6600 XT model.
 
+<img src="MorePoweTool-3.png">
+
 ### Preface
 
 Although graphics cards assembled by XFX have negative comments in Hackintosh forums by having custom BIOS that can be more problematic for macOS that of other brands, I have installed a XFX QICK 308 AMD Radeon RX 6600 XT 8GB in Monterey 12.2.1 and the result has been excellent, installation was very simple and performance is much higher than that of the previous card, RX580 8GB.
