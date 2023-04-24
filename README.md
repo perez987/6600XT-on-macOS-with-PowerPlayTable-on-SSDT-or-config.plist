@@ -168,7 +168,7 @@ and add the PP_PhmSoftPowerPlayTable key, its value as Data is the long text str
  
 Restart. If everything went well, you will see that fans are running all the time with a very low sound, base temperature rarely exceeds 35º and performance of the GPU and scores in tests have not changed.
 
-<img src="Temperature.png" width="400">
+<img src="Temperature.png" width="600">
 
 ---
 
