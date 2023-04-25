@@ -5,15 +5,21 @@
  <tr><td align=center><img src="XFX-6600XT.png">
 </table>
 
-### Note (April 2023)
+<details>
+<summary>
+<h3>Note (April 2023)</h3>
+</summary>
 
-In latest versions of macOS Ventura (currently 13.4) the option to disable the Zero RPM feature when using the SoftPowerPlayTable (SPPT) string seems to have been lost. Even with it loaded from the OpenCore config.plist file, GPU fans are mostly stopped and temperature varies between 50 and 55º (approximately 10º more than in Windows), the same as without SPPT.
+There are users on latest versions of macOS Ventura (currently 13.4) saying that the option to disable the Zero RPM feature when using the SoftPowerPlayTable (SPPT) string seems to have been lost. Even with it loaded from the OpenCore config.plist file, GPU fans are mostly stopped and temperature varies between 50 and 55º (approximately 10º more than in Windows), the same as without SPPT.
+It's something I've verified myself.
 
 There is a way to recover the lost function. When modifying the vBIOS file in Windows with MorePowerTool, instead of deactivating Zero RPM (unchecking its option box) it is left enabled (checkbox checked) but the temperatures at which the fans start and stop are modified. By default they are configured like this: Stop Temperature 50º and Start Temperature 60º.
 
 I have tried setting Start Temperature to 40º and Stop temperature to 35º, I have created the new registry key (Save or Write SPPT) and I have exported it to the OpenCore config.plist file. With this modification, in macOS the fans spin and stop with the GPU temperature varying between 35 and 40º, achieving a result similar to what was lost. Performance in GeekBench 6 is as expected, 98.000 – 114.000 with an RX 6600 XT model.
 
 <img src="MorePoweTool-3.png" width="400">
+
+</details>
 
 ### Preface
 
