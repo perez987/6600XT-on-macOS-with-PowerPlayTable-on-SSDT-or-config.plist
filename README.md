@@ -1,4 +1,4 @@
-# XFX RX 6600 XT on macOS Monterey or Ventura: Zero RPM with SoftPowerPlayTable
+# XFX RX 6600 XT on macOS: disable Zero RPM with SoftPowerPlayTable
 
 <table>
  <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
@@ -64,7 +64,7 @@ The score in the Geeks3D FurMark test is double with the RX 6600 XT than with th
 
 ### Temperature sensor
 
-Starting with the Radeon VII model, it is necessary to use kexts to read the temperature of AMD graphics cards since macOS stopped exposing that data directly. This also applies to the 6000 series. To know the temperature of the card you can use *Aluveitie* RadeonSensor. It consists of 3 elements:
+Starting with the Radeon VII model, it is necessary to use kexts to read the temperature of AMD graphics cards since macOS stopped exposing that data directly. This also applies to the 6000 series. To know the temperature of the card you can use [RadeonSensor](https://github.com/ChefKissInc/RadeonSensor). It consists of 3 elements:
 
 - Radeon sensor.kext: Lilu plugin to read card temperature
 - SMCRadeonGPU.kext: to export data via VirtualSMC to monitoring tools such as iStat Menus
