@@ -142,6 +142,13 @@ Note: We don't need to access to the Registry to find the PP_PhmSoftPowerPlayTab
 
  #### Phase 2 on macOS
 
+***SSDT Method:***
+
+You can read [heare](./SSDT/README.md) the extraction of power play table from rom, and generated from DSDT - SSDT APCI Table.
+
+
+***DeviceProperty Method:***
+
 Fix the text file to be able to use it in OpenCore. I have used BBEdit but any app capable of editing plain unformatted text can do.
 
 - Select the block starting with `"PP_PhmSoftPowerPlayTable"=` removing the rest of the text.
