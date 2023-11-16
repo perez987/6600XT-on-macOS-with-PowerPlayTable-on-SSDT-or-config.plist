@@ -4,7 +4,7 @@ thefile="./extracted.pp_table"
 
 file_size=$(stat -f %z "$thefile")
 
-printf "\tPP_PhmSoftWTTable,\n\t\tBuffer (0x%X)\n\t\t{\n" "$file_size"
+printf "\PP_PhmSoftPowerPlayTable,\n\t\tBuffer (0x%X)\n\t\t{\n" "$file_size"
 
 while IFS= read -r line; do
     if [[ $line =~ ^0000([0-9A-Za-z]+):\ (([0-9A-Z]{2}\ )+)(\ +)(.*) ]]; then

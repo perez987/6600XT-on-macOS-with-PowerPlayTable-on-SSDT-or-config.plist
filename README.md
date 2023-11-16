@@ -144,7 +144,7 @@ Note: We don't need to access to the Registry to find the PP_PhmSoftPowerPlayTab
 
 ***SSDT Method:***
 
-You can read [heare](./SSDT/README.md) the extraction of power play table from rom, and generated from DSDT - SSDT APCI Table.
+You can read [there](./SSDT/README.md) how to extract PowerPlayTable directly from the ROM file and convert it to hexadecimal data that can be used within an SSDT file instead of writing it to the DeviceProperties key of `config.plist`.
 
 
 ***DeviceProperty Method:***
