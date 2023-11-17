@@ -49,7 +49,7 @@ DefinitionBlock ("", "SSDT", 2, "ACDT", "AMDGPU", 0x00001000)
                                         /* 09A0 */  0x00, 0x00, 0x00, 0x00, 0x1E, 0x06               // ......
 
                         }
-                        //END marks
+                        //END mark
                         
                         /*
 
