@@ -148,7 +148,7 @@ You can read [here](./SSDT/README.md) how to extract PowerPlayTable directly fro
 
 ***DeviceProperty Method:***
 
-Fix the text file to be able to use it in OpenCore. I used BBEdit but any app capable of editing plain unformatted text can do.
+Fix the text file to be able to use it in OpenCore. I used BBEdit but any app capable of editing plain text can do.
 
 - Select the block starting with `"PP_PhmSoftPowerPlayTable"=` removing the rest of the text.
 - Also delete `"PP_PhmSoftPowerPlayTable"=hex:` leaving only the hexadecimal string composed of several lines.
