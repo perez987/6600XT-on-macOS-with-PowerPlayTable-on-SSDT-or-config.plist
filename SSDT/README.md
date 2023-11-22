@@ -1,18 +1,14 @@
-# SSDT METHOD
-
-* https://github.com/5T33Z0/OC-Little-Translated/tree/main/11_Graphics/GPU/AMD_Radeon_Tweaks#method-2-selecting-specific-amd-framebuffers-via-deviceproperties
-* https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md
-
+# SSDT METHOD: softPowerPlayTable inside SSDT file
 
 Use GPU-Z to export roms from your graphics card or use this page to find one in https://www.techpowerup.com/gpu-specs/
 
-Once the `rom` file is obtained, we will extract the PPT file if it is the factory default file, please note that it will not be modified with respect to the Zero RPM!
+Once the `rom` file is obtained, we will extract the PPT file if it is the factory default file, please note that it will not be modified with respect to the ***Zero RPM***!
 
 ----
 
 ## OSX Extracting PPT from ROM
 In Osx we install the following packages:
-Download this tool  [upp](https://github.com/sibradzic/upp) and go to the insede of the folder
+Download this tool [upp](https://github.com/sibradzic/upp) and run it next to the ROM file.
 
 ```shell
 git clone https://github.com/sibradzic/upp.git && cd upp
@@ -21,7 +17,6 @@ sudo python3 setup.py install
 sudo python3 -m pip install click
 upp --pp-file=extracted.pp_table extract -r <rom_file>.rom
 ```
-
 
 After extracting data an `extracted.pp_table` file will be created and we copy it to the folder where we have the `to-hex` script.
 Give it permissions to run: `chmod +x ./to-hex.sh`.
@@ -41,7 +36,8 @@ Launch the script `./to-hex.sh`.
 	}
 ```
 
-For an example we will preview the real NAVI21 dump file of an iMacPro1,1 : `Original-iMacPro11.dsl` and then modify our DSL `Sample-Navi21.dsl`. 
+
+In the folder you can find `Sample-Navi21.dsl` it is a quite common file, you can use it as a reference.
 We copy from terminal the result and insert it right between the comments:
 
 ```
@@ -49,6 +45,12 @@ We copy from terminal the result and insert it right between the comments:
 
 // End mark
 ```
+
+Also remember to modify your PCI device path.
+
+
+For the rest, the file is an original iMacPro1,1 dump `Original-iMacPro11.dsl`, of course each user has to modify it according to his hardware.\
+Maybe everything is correctly detected and we just want to add the PPT string to the system. In this case we can delete all the unnecessary properties.
 
 ---
 
@@ -65,4 +67,9 @@ Place it in the APCI folder and reload OpenCore. To check that everything is cor
 ---
 
 #### Tools
-	***Online Converter:*** https://www.rapidtables.com/convert/number/decimal-to-hex.html
+	* ***Online Converter:*** https://www.rapidtables.com/convert/number/decimal-to-hex.html
+
+
+#### Docs:
+   * [AMD tweaks: SSDTs vs. DeviceProperties](https://github.com/5T33Z0/OC-Little-Translated/tree/main/11_Graphics/GPU/AMD_Radeon_Tweaks#method-2-selecting-specific-amd-framebuffers-via-deviceproperties)
+   * [Creating Custom PowerPlay Tables for AMD Polaris Cards](https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md)
