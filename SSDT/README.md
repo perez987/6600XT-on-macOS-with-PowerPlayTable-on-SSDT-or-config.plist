@@ -19,8 +19,8 @@ upp --pp-file=extracted.pp_table extract -r <rom_file>.rom
 ```
 
 After extracting data an `extracted.pp_table` file will be created and we copy it to the folder where we have the `to-hex` script.
-Give it permissions to run: `chmod +x ./to-hex.sh`.
-Launch the script `./to-hex.sh`.
+Give it permissions to run: `chmod +x ./pp_table-to-hex-dsl.sh`.
+Launch the script `./pp_table-to-hex-dsl.sh`.
 
 ***Result:***
 ```text
@@ -49,7 +49,7 @@ We copy from terminal the result and insert it right between the comments:
 Also remember to modify your PCI device path.
 
 
-For the rest, the file is an original iMacPro1,1 dump `Original-iMacPro11.dsl`, of course each user has to modify it according to his hardware.\
+For the rest, the file is an original iMacPro1,1 dump `samples/Original-iMacPro11.dsl`, of course each user has to modify it according to his hardware.\
 Maybe everything is correctly detected and we just want to add the PPT string to the system. In this case we can delete all the unnecessary properties.
 
 ---
@@ -67,7 +67,17 @@ Place it in the APCI folder and reload OpenCore. To check that everything is cor
 ---
 
 #### Tools
-	* ***Online Converter:*** https://www.rapidtables.com/convert/number/decimal-to-hex.html
+***Online Converter:*** https://www.rapidtables.com/convert/number/decimal-to-hex.html
+
+Convert Windows Reg. Editor exported as text file to DSL `script/win-reg-dump-TXT-to-hex-dsl.sh`
+```
+win-reg-dump-TXT-to-hex-dsl.sh ../samples/000bus3-1.txt
+```
+
+Convert Windows Reg. Editor exported as REG file: `script/win-reg-to-hex-dsl.sh`
+```
+win-reg-to-hex-dsl.sh ../samples/ppt.reg
+```
 
 
 #### Docs:

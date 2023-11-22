@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#█▀ █▄█ █▀▀ █░█ █▀▀ █░█
+#▄█ ░█░ █▄▄ █▀█ ██▄ ▀▄▀
+
+#Author: <Anton Sychev> (anton at sychev dot xyz) 
+#win-reg-dump-TXT-to-hex-dsl.sh (c) 2023 
+#Created:  2023-11-22 23:29:47 
+#Desc: Convert pp_table to hex dsl format just simply run and copy and paste
+
 thefile="./extracted.pp_table"
 
 if [[ ! -e "$thefile" ]]; then
@@ -9,8 +17,7 @@ fi
 
 file_size=$(stat -f %z "$thefile")
 
-#printf "\tPP_PhmSoftWTTable,\n\t\tBuffer (0x%X)\n\t\t{\n" "$file_size"
-printf "\PP_PhmSoftPowerPlayTable,\n\t\tBuffer ()\n\t\t{\n" "$file_size"
+printf "\t\t\"PP_PhmSoftPowerPlayTable\",\n\t\tBuffer ()\n\t\t{\n" "$file_size"
 
 while IFS= read -r line; do
     if [[ $line =~ ^0000([0-9A-Za-z]+):\ (([0-9A-Z]{2}\ )+)(\ +)(.*) ]]; then
