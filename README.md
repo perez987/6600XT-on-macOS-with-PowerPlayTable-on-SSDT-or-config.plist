@@ -142,7 +142,13 @@ Note: We don't need to access to the Registry to find the PP_PhmSoftPowerPlayTab
 
  #### Phase 2 on macOS
 
-Fix the text file to be able to use it in OpenCore. I have used BBEdit but any app capable of editing plain unformatted text can do.
+***SSDT Method:***
+
+You can read [here](./SSDT/README.md) how to extract PowerPlayTable directly from the ROM file and convert it to hexadecimal data that can be used within an SSDT file instead of writing it to the DeviceProperties key of `config.plist`.
+
+***DeviceProperty Method:***
+
+Fix the text file to be able to use it in OpenCore. I used BBEdit but any app capable of editing plain text can do.
 
 - Select the block starting with `"PP_PhmSoftPowerPlayTable"=` removing the rest of the text.
 - Also delete `"PP_PhmSoftPowerPlayTable"=hex:` leaving only the hexadecimal string composed of several lines.
