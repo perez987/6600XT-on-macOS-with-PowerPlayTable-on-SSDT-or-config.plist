@@ -18,8 +18,8 @@ sudo python3 -m pip install click
 upp --pp-file=extracted.pp_table extract -r <rom_file>.rom
 ```
 
-After extracting data, the `extracted.pp_table` file will be created and we copy it to the folder where we have the `pp_table-to-hex-dsl.sh` script.
-Give it permissions to run: `chmod +x ./pp_table-to-hex-dsl.sh`.
+After extracting data, the `extracted.pp_table` file will be created and we copy it to the folder where we have the `pp_table-to-hex-dsl.sh` script.\
+Give it permissions to run: `chmod +x ./pp_table-to-hex-dsl.sh`.\
 Launch the script `./pp_table-to-hex-dsl.sh`.
 
 ***Result:***
