@@ -75,7 +75,7 @@ In addition to the PPT table extracted with `upp` from the GPU ROM, there are 2 
 win-reg-to-hex-dsl.sh ../samples/ppt.reg
 ```
 
-2. Windows Registry key exported as TXT file: `script/win-reg-dump-TXT-to-hex-dsl.sh`
+2. Windows Registry key exported as TXT file: `script/win-reg-dump-txt-to-hex-dsl.sh`
 ```
 win-reg-txt-to-hex-dsl.sh ../samples/ppt-reg.txt
 ```

@@ -50,10 +50,10 @@ formatted_content=$(echo "$PPT" | sed 's/ - / /g')
 formatted_content=$(echo "$formatted_content" | sed 's/^[[:xdigit:]]\{8\}\s*//' | sed "s/   //g")
 formatted_content=$(echo "$formatted_content" | sed 's/.\{47\}/&  \/\//g')
 formatted_content=$(echo "$formatted_content" | sed 's/\([0-9a-fA-F]\{2\}\)/0x\1, /g')
-formatted_content=$(echo "$formatted_content" | sed 's/,  \./ \/\/\./g')
+formatted_content=$(echo "$formatted_content" | sed 's/,  \./ \/\/\./g' | sed 's/\/\/.*//g' | sed 's/  //g' | sed 's/^/\t\t/')
+formatted_content=$(echo "$formatted_content" | tr -d '[:space:]') 
+formatted_content=$(echo "$formatted_content" | fold -w 80 | sed 's/^/\t\t/')
 
-echo "\"PP_PhmSoftPowerPlayTable\","
-echo -e "\tBuffer ()"
-echo -e "\t{"
-echo -e "$formatted_content"
-echo -e "\t}\n"
+printf "\t\"PP_PhmSoftPowerPlayTable\",\n\tBuffer ()\n\t{\n" 
+printf "$formatted_content" 
+printf "\n\t}\n"

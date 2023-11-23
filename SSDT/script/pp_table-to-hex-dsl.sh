@@ -7,8 +7,19 @@
 #win-reg-dump-TXT-to-hex-dsl.sh (c) 2023 
 #Created:  2023-11-22 23:29:47 
 #Desc: Convert pp_table to hex dsl format just simply run and copy and paste
+#Sample:
+#   With custom path:
+#   ./pp_table-to-hex-dsl.sh <file>
+#   ./pp_table-to-hex-dsl.sh extracted.pp_table
+#   Without custom path put ppt file in same folder and run:
+#   ./pp_table-to-hex-dsl.sh
 
-thefile="./extracted.pp_table"
+thefile="${1:-./extracted.pp_table}"
+
+if [ ! -f "$thefile" ]; then
+    echo "Error: File '$thefile' not found."
+    exit 1
+fi
 
 if [[ ! -e "$thefile" ]]; then
     echo "The $thefile file no exist\nPut your PPT Table file in same folder and run this script again."
@@ -17,7 +28,7 @@ fi
 
 file_size=$(stat -f %z "$thefile")
 
-printf "\t\t\"PP_PhmSoftPowerPlayTable\",\n\t\tBuffer ()\n\t\t{\n" "$file_size"
+printf "\"PP_PhmSoftPowerPlayTable\",\n\tBuffer ()\n\t{\n" "$file_size"
 
 while IFS= read -r line; do
     if [[ $line =~ ^0000([0-9A-Za-z]+):\ (([0-9A-Z]{2}\ )+)(\ +)(.*) ]]; then
@@ -39,4 +50,4 @@ while IFS= read -r line; do
     fi
 done < <(xxd -u -g 1 < "$thefile")
 
-printf "\t\t}\n"
+printf "\t}\n"
