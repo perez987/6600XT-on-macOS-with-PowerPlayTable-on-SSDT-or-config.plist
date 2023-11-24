@@ -2,7 +2,7 @@
 
 <table>
  <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
- <tr><td align=center><img src="XFX-6600XT.png">
+ <tr><td align=center><img src="img/XFX-6600XT.png">
 </table>
 
 <details>
@@ -15,7 +15,7 @@ It's something I've verified myself.
 
 There is a way to recover the lost function. When modifying the vBIOS file in Windows with MorePowerTool, instead of deactivating Zero RPM (checkbox unchecked)) it remains enabled (checkbox checked) but the temperatures at which the fans start and stop are modified. By default they are configured like this: Stop Temperature 50º and Start Temperature 60º. I have tried setting Start Temperature to 40º and Stop temperature to 35º, created the new registry key (Save as REG or Write SPPT) and exported it to OpenCore config.plist file. With this modification, in macOS fans spin and stop with the GPU temperature around 40º, achieving a result similar to what was lost. Performance in GeekBench 6 is as expected, 98.000 – 114.000 with an RX 6600 XT model.
 
-<img src="MorePoweTool-3.png" width="400">
+<img src="img/MorePoweTool-3.png" width="400">
 
 </details>
 
@@ -118,9 +118,9 @@ We need 2 programs:
 
 GPU-Z loads the specifications and settings of the GPU and exports everything to a file. To export (Graphics Card tab) the arrow icon coming out of the rectangle under the AMD Radeon logo is used. In the Advanced tab you have to note the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when searching for the sPPT key in the Windows registry.
 
-<img src="GPU-Z-1.png" width="400">
+<img src="img/GPU-Z-1.png" width="400">
 	
-<img src="GPU-Z-2.png" width="400">
+<img src="img/GPU-Z-2.png" width="400">
  
 MPT is where the task of generating the sPPT with Zero RPM disabled and writing it to the registry is performed.
 
@@ -132,9 +132,9 @@ MPT is where the task of generating the sPPT with Zero RPM disabled and writing 
 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\`
 There are several numbered keys here, choose the one that matches the bus number that you have written down from before: `0003\PP_PhmSoftPowerPlayTable`. With the `0003` key selected, export it as REG file, not as TXT file. File structure is different in each case and I have seen that it is easier to edit REG file. Regedit exports the complete `0003` key, I have not found a way to export only the PP_PhmSoftPowerPlayTable key. Change the file extension from reg to txt and save it in a place accessible from macOS.
 
-<img src="MorePoweTool-1.png" width="440">
+<img src="img/MorePoweTool-1.png" width="440">
 	
-<img src="MorePoweTool-2.png" width="440">
+<img src="img/MorePoweTool-2.png" width="440">
 
 Note: We don't need to access to the Registry to find the PP_PhmSoftPowerPlayTable value. The "Save" button will export the registry file which includes PhmSoftPowerPlayTable.
 
@@ -174,11 +174,11 @@ Open config.plist file, look for \
 `DeviceProperties >> Add >> PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`\
 and add the PP_PhmSoftPowerPlayTable key, its value as Data is the long text string.
 	
-<img src="DeviceProperties.png">
+<img src="img/DeviceProperties.png">
  
 Restart. If everything went well, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 35º and performance of the GPU and scores in tests have not changed.
 
-<img src="Temperature.png" width="600">
+<img src="img/Temperature.png" width="600">
 
 ---
 
