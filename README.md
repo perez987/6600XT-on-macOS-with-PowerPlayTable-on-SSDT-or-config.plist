@@ -107,7 +107,7 @@ The fastest and most effective way to achieve this is by deactivating the Zero R
 One way to disable Zero RPM on macOS without changing any other parameters is using sPPT. It is a more complex method than the patch for Monterey 12.3 but it has the advantage that the GPU behavior, including GeekBench 5 scores, do not change.
 To obtain the sPPT you have to go on Windows, where the registry key is generated and exported to a file that we take to macOS, here the file is modified and a new property is added to the OpenCore config.plist file.
 
-#### Phase 1 on Windows
+### Phase 1 on Windows
 
 We need 2 programs:
  
@@ -136,7 +136,7 @@ There are several numbered keys here, choose the one that matches the bus number
 
 Note: We don't need to access to the Registry to find the PP_PhmSoftPowerPlayTable value. The "Save" button will export the registry file which includes PhmSoftPowerPlayTable.
 
- #### Phase 2 on macOS
+ ### Phase 2 on macOS
 
 ***SSDT Method:***
 
