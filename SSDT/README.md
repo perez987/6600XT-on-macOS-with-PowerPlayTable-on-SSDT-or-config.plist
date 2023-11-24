@@ -62,12 +62,12 @@ Place the SSDT in APCI folder and config.plist. Reboot to reload OpenCore. To ch
 
 In addition to the PPT table extracted with `upp` directly from the GPU ROM, there are 2 other sources of the data to be converted to DSL-friendly hexadecimal string:
 
-1. Windows Registry key exported as REG file: `script/win-reg-to-hex-dsl.sh`
+1. Windows Registry key exported as REG file: `scripts/win-reg-to-hex-dsl.sh`
 ```
 win-reg-to-hex-dsl.sh ../samples/sPPT-reg.reg
 ```
 
-2. Windows Registry key exported as TXT file: `script/win-reg-dump-txt-to-hex-dsl.sh`
+2. Windows Registry key exported as TXT file: `scripts/win-reg-dump-txt-to-hex-dsl.sh`
 ```
 win-reg-txt-to-hex-dsl.sh ../samples/sPPT-reg-txt.txt
 ```
