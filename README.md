@@ -84,7 +84,7 @@ AMD Radeon 6600 cards support ReBAR. To activate this feature you must:
 I have tested the card with ReBAR on and off and I have not noticed any difference. GeekBench 5 test scores on macOS and FurMark on Windows have been virtually identical.
 It is likely that with a CPU of 10th generation or newer and games of big graphic demand the performance will improve with ReBAR enabled but, at least in my system, there is no gain in it.
 
-## Zero RPM and Monterey 12.3
+## Zero RPM and softPowerPlayTable
 
 By default, fans of the RX 6600 XT card (like other AMD models) are stopped below 60º, it is what is known as Zero RPM. This has as main advantage the absence of noise except when there is a high graphic requirement.
 
