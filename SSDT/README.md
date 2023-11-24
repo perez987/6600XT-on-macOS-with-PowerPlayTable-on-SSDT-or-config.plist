@@ -39,7 +39,7 @@ Launch the script `./pp_table-to-hex-dsl.sh`.
 	}
 ```
 
-In the `SSDT/samples`folder you can find `SAMPLE-NAVI21.dsl`, it is a quite common file, you can use it as a reference.\
+In the `SSDT/samples`folder you can find `SAMPLE-NAVI.dsl`, it is a quite common file, you can use it as a reference.\
 Copy the result from the Terminal window and paste it right between the comments:
 
 ```
