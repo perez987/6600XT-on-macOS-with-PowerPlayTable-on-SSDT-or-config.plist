@@ -2,16 +2,17 @@
 
 Use GPU-Z to export ROM from your graphics card or go to [techpowerup](https://www.techpowerup.com/gpu-specs/) to find one.
 
-Once the ROM file is obtained, we will extract the PPT key as `extracted.pp_table` file. It is the factory default file. Please note that it will not be modified with respect to the ***Zero RPM*** feature!
+Once the ROM file is obtained, `upp` will extract the PPT key as `extracted.pp_table` file.\
+It is the factory default file.\
+Please note that it will not be modified as far as ***Zero RPM*** feature is concerned!
 
 ----
 
-## macOS Extracting PPT from ROM
+## Extracting PPT from ROM on macOS
 
-In macOS we install the following package:
-Download this tool [upp](https://github.com/sibradzic/upp) and run it next to the ROM file.
+Install `upp`: download the tool [upp](https://github.com/sibradzic/upp) and run it next to the ROM file.
 
-```shell
+```
 git clone https://github.com/sibradzic/upp.git && cd upp
 python3 setup.py build
 sudo python3 setup.py install
@@ -19,11 +20,12 @@ sudo python3 -m pip install click
 upp --pp-file=extracted.pp_table extract -r <rom_file>.rom
 ```
 
-After extracting data, an `extracted.pp_table` file will be created. We copy it to the folder where we have the `pp_table-to-hex-dsl.sh` script.\
+After running `upp`, an `extracted.pp_table` file will be created. Copy it to the folder where the `pp_table-to-hex-dsl.sh` script is.\
 Give it permissions to run: `chmod +x ./pp_table-to-hex-dsl.sh`.\
 Launch the script `./pp_table-to-hex-dsl.sh`.
 
 ***Result:***
+
 ```text
 	"PP_PhmSoftPowerPlayTable"
 	Buffer ()
@@ -37,8 +39,8 @@ Launch the script `./pp_table-to-hex-dsl.sh`.
 	}
 ```
 
-In the `SSDT/samples`folder you can find `SAMPLE-NAVI21.dsl`, it is a quite common file, you can use it as a reference.
-We copy the result from Terminal window and insert it right between the comments:
+In the `SSDT/samples`folder you can find `SAMPLE-NAVI21.dsl`, it is a quite common file, you can use it as a reference.\
+Copy the result from the Terminal window and paste it right between the comments:
 
 ```
 // Insert here your code
@@ -46,30 +48,22 @@ We copy the result from Terminal window and insert it right between the comments
 // End mark
 ```
 
+For better identification, rename the final file to `SSDT-BR0.dsl` and don't forget to compile to AML format that later has to be put in ACPI folder and in `config.plist` file.
+
 Important! Remember to check your IOReg device path according to your system.
 
 In the `SSDT/samples`folder there is also an original iMacPro1,1 dump `Original-iMacPro11.dsl`, of course each user has to modify it according to his hardware.\
 Maybe everything is correctly detected and we just want to add the PPT string to the system. In this case we can delete all the unnecessary properties.
 
----
+### Test
 
-### Cleanup
-
-For better and quicker identification, rename the final file to `SSDT-BR0.dsl` and don't forget to compile to AML format that later has to be put in ACPI folder and in your `config.plist` file.
-
----
-
-Place it in the APCI folder and reload OpenCore. To check that everything is correct it should look like this image:
+Place the SSDT in APCI folder and config.plist. Reboot to reload OpenCore. To check that everything is correct open IORegistryExplorer, go to GFX0 and check if it looks like this image:
 
 ![IOReg](./IOreg-gfx0-ppt.png)
 
----
+### Windows REG file to DSL-friendly string
 
-#### Tools
-
-***Online Converter:*** https://www.rapidtables.com/convert/number/decimal-to-hex.html
-
-In addition to the PPT table extracted with `upp` from the GPU ROM, there are 2 other sources of the data to be converted to DSL-friendly hexadecimal string:
+In addition to the PPT table extracted with `upp` directly from the GPU ROM, there are 2 other sources of the data to be converted to DSL-friendly hexadecimal string:
 
 1. Windows Registry key exported as REG file: `script/win-reg-to-hex-dsl.sh`
 ```
@@ -81,9 +75,13 @@ win-reg-to-hex-dsl.sh ../samples/ppt.reg
 win-reg-txt-to-hex-dsl.sh ../samples/ppt-reg.txt
 ```
 
-Both methods allow you to modify PPT with MorePower Tools in Windows to adjust the settings of Zero RPM and load the key with our settings into the SSDT file.
+Both methods allow you to modify sPPT with MorePower Tools in Windows to adjust the settings of Zero RPM and load the key with custom settings into the SSDT file.
 
-#### Docs:
+### Tool
+
+[***Decimal to Hexadecimal converter***](https://www.rapidtables.com/convert/number/decimal-to-hex.html)
+
+### Docs:
 
    * [AMD tweaks: SSDTs vs. DeviceProperties](https://github.com/5T33Z0/OC-Little-Translated/tree/main/11_Graphics/GPU/AMD_Radeon_Tweaks#method-2-selecting-specific-amd-framebuffers-via-deviceproperties)
    * [Creating Custom PowerPlay Tables for AMD Polaris Cards](https://github.com/5T33Z0/OC-Little-Translated/blob/main/11_Graphics/GPU/AMD_Radeon_Tweaks/Polaris_PowerPlay_Tables.md)
