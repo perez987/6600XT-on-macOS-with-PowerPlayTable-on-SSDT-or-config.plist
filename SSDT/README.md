@@ -64,12 +64,12 @@ In addition to the PPT table extracted with `upp` directly from the GPU ROM, the
 
 1. Windows Registry key exported as REG file: `script/win-reg-to-hex-dsl.sh`
 ```
-win-reg-to-hex-dsl.sh ../samples/ppt.reg
+win-reg-to-hex-dsl.sh ../samples/sPPT.reg
 ```
 
 2. Windows Registry key exported as TXT file: `script/win-reg-dump-txt-to-hex-dsl.sh`
 ```
-win-reg-txt-to-hex-dsl.sh ../samples/ppt-reg.txt
+win-reg-txt-to-hex-dsl.sh ../samples/sPPT-reg.txt
 ```
 
 Both methods allow you to modify sPPT with MorePower Tools in Windows to adjust Zero RPM and load the key with custom settings into the SSDT file.
