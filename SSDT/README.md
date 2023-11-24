@@ -1,13 +1,14 @@
 # SSDT METHOD: softPowerPlayTable inside SSDT file
 
-Use GPU-Z to export roms from your graphics card or go to [techpowerup](https://www.techpowerup.com/gpu-specs/) to find one.
+Use GPU-Z to export ROM from your graphics card or go to [techpowerup](https://www.techpowerup.com/gpu-specs/) to find one.
 
 Once the ROM file is obtained, we will extract the PPT key as `extracted.pp_table` file. It is the factory default file. Please note that it will not be modified with respect to the ***Zero RPM*** feature!
 
 ----
 
 ## macOS Extracting PPT from ROM
-In macOS we install the following packages:
+
+In macOS we install the following package:
 Download this tool [upp](https://github.com/sibradzic/upp) and run it next to the ROM file.
 
 ```shell
@@ -18,7 +19,7 @@ sudo python3 -m pip install click
 upp --pp-file=extracted.pp_table extract -r <rom_file>.rom
 ```
 
-After extracting data, the `extracted.pp_table` file will be created and we copy it to the folder where we have the `pp_table-to-hex-dsl.sh` script.\
+After extracting data, an `extracted.pp_table` file will be created. We copy it to the folder where we have the `pp_table-to-hex-dsl.sh` script.\
 Give it permissions to run: `chmod +x ./pp_table-to-hex-dsl.sh`.\
 Launch the script `./pp_table-to-hex-dsl.sh`.
 
@@ -37,7 +38,7 @@ Launch the script `./pp_table-to-hex-dsl.sh`.
 ```
 
 In the `SSDT/samples`folder you can find `SAMPLE-NAVI21.dsl`, it is a quite common file, you can use it as a reference.
-We copy the result from terminal window and insert it right between the comments:
+We copy the result from Terminal window and insert it right between the comments:
 
 ```
 // Insert here your code
@@ -45,7 +46,7 @@ We copy the result from terminal window and insert it right between the comments
 // End mark
 ```
 
-Also remember to modify your PCI device path according to your system.
+Important! Remember to check your IOReg device path according to your system.
 
 In the `SSDT/samples`folder there is also an original iMacPro1,1 dump `Original-iMacPro11.dsl`, of course each user has to modify it according to his hardware.\
 Maybe everything is correctly detected and we just want to add the PPT string to the system. In this case we can delete all the unnecessary properties.
@@ -60,7 +61,7 @@ For better and quicker identification, rename the final file to `SSDT-BR0.dsl` a
 
 Place it in the APCI folder and reload OpenCore. To check that everything is correct it should look like this image:
 
-![ioreg](./iorex_pp_ppt.png)
+![IOReg](./IOreg-gfx0-ppt.png)
 
 ---
 
