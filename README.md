@@ -134,7 +134,7 @@ There are several numbered keys here, choose the one that matches the bus number
 	
 <img src="img/MorePoweTool-2.png" width="440">
 
-*Note*: We don't need to access the Registry to find the PP_PhmSoftPowerPlayTable value. The "Save" button will export the registry file which has only the PhmSoftPowerPlayTable block, in this way it's easier to get the data.
+**Note**: We don't need to access the Registry to find the PP_PhmSoftPowerPlayTable value. The "Save" button will export the registry file which has only the PhmSoftPowerPlayTable block, in this way it's easier to get the data.
 
  ### Phase 2 on macOS
 
