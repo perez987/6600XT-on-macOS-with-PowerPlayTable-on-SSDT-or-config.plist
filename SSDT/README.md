@@ -72,7 +72,7 @@ win-reg-to-hex-dsl.sh ../samples/ppt.reg
 win-reg-txt-to-hex-dsl.sh ../samples/ppt-reg.txt
 ```
 
-Both methods allow you to modify sPPT with MorePower Tools in Windows to adjust the settings of Zero RPM and load the key with custom settings into the SSDT file.
+Both methods allow you to modify sPPT with MorePower Tools in Windows to adjust Zero RPM and load the key with custom settings into the SSDT file.
 
 ### Tool
 
