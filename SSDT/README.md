@@ -52,14 +52,11 @@ For better identification, rename the final file to `SSDT-BR0.dsl` and don't for
 
 Important! Remember to check your IOReg device path according to your system.
 
-In the `SSDT/samples`folder there is also an original iMacPro1,1 dump `Original-iMacPro11.dsl`, of course each user has to modify it according to his hardware.\
-Maybe everything is correctly detected and we just want to add the PPT string to the system. In this case we can delete all the unnecessary properties.
-
 ### Test
 
 Place the SSDT in APCI folder and config.plist. Reboot to reload OpenCore. To check that everything is correct open IORegistryExplorer, go to GFX0 and check if it looks like this image:
 
-![IOReg](./IOreg-gfx0-ppt.png)
+![IOReg](img/IOreg-gfx0-ppt.png)
 
 ### Windows REG file to DSL-friendly string
 
