@@ -8,7 +8,7 @@ Please note that it will not be modified as far as ***Zero RPM*** feature is con
 
 ----
 
-## Extracting PPT from ROM on macOS
+## Extracting sPPT from ROM on macOS
 
 Install `upp`: download the tool [upp](https://github.com/sibradzic/upp) and run it next to the ROM file.
 
