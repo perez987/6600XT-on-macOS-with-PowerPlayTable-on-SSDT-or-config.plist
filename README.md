@@ -86,8 +86,6 @@ It is likely that with a CPU of 10th generation or newer and games of big graphi
 
 ## Zero RPM and Monterey 12.3
 
-### Zero RPM
-
 By default, fans of the RX 6600 XT card (like other AMD models) are stopped below 60º, it is what is known as Zero RPM. This has as main advantage the absence of noise except when there is a high graphic requirement.
 
 Users who have this card in a Hackintosh with dual boot have observed that temperature, with idle system, is usually 10-15º lower in Windows than in macOS (35-40º vs 50º). In both systems Zero RPM keeps fans stopped below 60º.
