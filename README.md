@@ -166,6 +166,7 @@ After is like this:
 
 It is necessary to know the PCI device path to the graphics card, it can be done with the `gfxutil` tool (Terminal) or from Hackintool in the PCIe tab. In my case is:
 `PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`
+
 Note: Device Name and Device Path may be different on your system.
 
 Open config.plist file, look for \
