@@ -140,7 +140,7 @@ There are several numbered keys here, choose the one that matches the bus number
 
 ***SSDT Method:***
 
-You can read [here](./SSDT/README.md) how to extract PowerPlayTable directly from the ROM file and convert it to hexadecimal data that can be used within an SSDT file instead of writing it to the DeviceProperties key of `config.plist`.
+You can read [here](./SSDT/README.md) how to extract PowerPlayTable directly from the ROM file (defualto sPPT, Zero RPM enabled) or from Windows registry file (sPPT with customized Zero RPM) and convert it to hexadecimal data that can be used within an SSDT file instead of writing it to the DeviceProperties key of `config.plist`. Conversions are easily made thanks to scripts developed by [klich3](https://github.com/klich3/).
 
 ***DeviceProperty Method:***
 
