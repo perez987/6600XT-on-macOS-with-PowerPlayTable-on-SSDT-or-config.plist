@@ -1,10 +1,5 @@
 # XFX RX 6600 XT graphics card on macOS
 
-<table>
- <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
- <tr><td align=center><img src="img/XFX-6600XT.png">
-</table>
-
 ### Preface
 
 Although graphics cards assembled by XFX have negative comments in Hackintosh forums by having custom BIOS that can be more problematic for macOS that other brands, I have installed a XFX QICK 308 AMD Radeon RX 6600 XT 8GB in Monterey 12.2.1 and the result has been excellent, installation was very simple and performance is much higher than that of the previous card, RX 580 8GB.
