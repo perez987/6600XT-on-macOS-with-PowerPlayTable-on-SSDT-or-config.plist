@@ -5,20 +5,6 @@
  <tr><td align=center><img src="img/XFX-6600XT.png">
 </table>
 
-<details>
-<summary>
-<h3>Note about Ventura 13.4(April 2023)</h3>
-</summary>
-
-There are users on latest versions of macOS Ventura (currently 13.4) saying that the option to disable Zero RPM feature when using SoftPowerPlayTable (SPPT) string seems to have been lost. Even with it loaded from OpenCore config.plist file, GPU fans are mostly stopped and temperature varies between 50 and 55º (approximately 10º more than in Windows), the same as without SPPT.
-It's something I've verified myself.
-
-There is a way to recover the lost function. When modifying the vBIOS file in Windows with MorePowerTool, instead of deactivating Zero RPM (checkbox unchecked)) it remains enabled (checkbox checked) but the temperatures at which the fans start and stop are modified. By default they are configured like this: Stop Temperature 50º and Start Temperature 60º. I have tried setting Start Temperature to 45º and Stop temperature to 40º, created the new registry key (Save as REG or Write SPPT) and exported it to OpenCore config.plist file. With this modification, in macOS fans spin and stop with the GPU temperature around 40º, achieving a result similar to what was lost. Performance in GeekBench 6 is as expected, 98.000 – 114.000 with an RX 6600 XT model.
-
-<img src="img/MorePoweTool-3.png" width="400">
-
-</details>
-
 ### Preface
 
 Although graphics cards assembled by XFX have negative comments in Hackintosh forums by having custom BIOS that can be more problematic for macOS that other brands, I have installed a XFX QICK 308 AMD Radeon RX 6600 XT 8GB in Monterey 12.2.1 and the result has been excellent, installation was very simple and performance is much higher than that of the previous card, RX 580 8GB.
@@ -83,101 +69,6 @@ AMD Radeon 6600 cards support ReBAR. To activate this feature you must:
  
 I have tested the card with ReBAR on and off and I have not noticed any difference. GeekBench 5 test scores on macOS and FurMark on Windows have been virtually identical.
 It is likely that with a CPU of 10th generation or newer and games of big graphic demand the performance will improve with ReBAR enabled but, at least in my system, there is no gain in it.
-
-## Zero RPM and softPowerPlayTable
-
-By default, fans of the RX 6600 XT card (like other AMD models) are stopped below 60º, it is what is known as Zero RPM. This has as main advantage the absence of noise except when there is a high graphic requirement.
-
-Users who have this card in a Hackintosh with dual boot have observed that temperature, with idle system, is usually 10-15º lower in Windows than in macOS (35-40º vs 50º). In both systems Zero RPM keeps fans stopped below 60º.
-
-On Windows it is easy to enable/disable Zero RPM from the Radeon software that has this option in custom settings. But on macOS there is no such possibility. So far, existing option to disable Zero RPM in macOS is the creation on Windows, from the AMD card ROM, of a SoftPowerPlayTable (sPPT) (contains the graphics card settings in the form of a hexadecimal value) that OpenCore can load into DeviceProperties or in SST. If the sPPT is saved in Windows after disabling Zero RPM, when macOS loads the sPPT also works with Zero RPM disabled. But it is a complex task that requires specific programs and is not within the reach of the inexperienced user.
- 
-### AMD PowerPlay
- 
-AMD's PowerPlay technology allows the graphics card to vary its performance according to demand, switching between high performance and maximum energy savings. It has automatic operating modes according to predefined parameters and also allows user settings. Windows 10 and 11 can make a copy of these power profiles in the form of a registry key called SoftPowerPlayTables (sPPT onwards) whose value is a long hexadecimal string. It is a way to have a quick reference by the operating system. This sPPT key can be read and modified by some utilities. Thanks to this, it is possible to modify operation's parameters of the Radeon by changing its behavior and its power management.
- 
-### Zero RPM
- 
-AMD Radeon cards of 5000 and 6000 series come from factory with the Zero RPM function activated so that fans are stopped below a temperature (usually 60º), this makes them completely silent except when the graphics processor is required (tests, games, etc.). As for the RX 6600 and 6600 XT models, it has been commented that, in macOS, they usually work at higher base temperature than in Windows, approximately 10-15º. On my PC, for example, the base temperature on Windows is 35-40º and on macOS it is 50-55º. Although these are perfectly valid safe temperatures for daily use, some users would prefer to have lower values.
-
-The fastest and most effective way to achieve this is by deactivating the Zero RPM function so that fans are spinning all the time and not just above a predefined temperature. However, this is very simple to do on Windows with the Radeon software but on macOS there is no such option.
-
-### SoftPowerPlayTable
-
-One way to disable Zero RPM on macOS without changing any other parameters is using sPPT. It is a more complex method than the patch for Monterey 12.3 but it has the advantage that the GPU behavior, including GeekBench 5 scores, do not change.
-To obtain the sPPT you have to go on Windows, where the registry key is generated and exported to a file that we take to macOS, here the file is modified and a new property is added to the OpenCore config.plist file.
-
-### Phase 1 on Windows
-
-We need 2 programs:
- 
-- GPU-Z (from TechPowerUp): Loads the firmware (vBIOS = video BIOS) of the graphics card and exports it to a ROM file that can be read by MorePowerTool.
-- MorePowerTool (MPT) (from Igor'sLAB): Reads the ROM file and handles the registry key PP_PhmSoftPowerPlayTable (deleting current or creating new).
-
-GPU-Z loads the specifications and settings of the GPU and exports everything to a file. To export (Graphics Card tab) the arrow icon coming out of the rectangle under the AMD Radeon logo is used. In the Advanced tab you have to note the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when searching for the sPPT key in the Windows registry.
-
-<img src="img/GPU-Z-1.png" width="400">
-	
-<img src="img/GPU-Z-2.png" width="400">
- 
-MPT is where the task of generating the sPPT with Zero RPM disabled and writing it to the registry is performed.
-
-- At the top, choose the GPU model, it usually shows at the beginning of the name the bus number that we wrote down earlier (3 in this case).
-- It is recommended to delete the table that may have existed before >> Delete SPPT button.
-- Load the previously generated rom file from GPU-Z.
-- Modify the Zero RPM option by unchecking the checkbox in 2 places: Features tab and Fan tab.
-- Write the new table to the registry (Write SPPT button): the registry key is called PP_PhmSoftPowerPlayTable and is located in
-`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\`
-There are several numbered keys here, choose the one that matches the bus number that you have written down from before: `0003\PP_PhmSoftPowerPlayTable`. With the `0003` key selected, export it as REG file, not as TXT file. File structure is different in each case and I have seen that it is easier to edit REG file. Regedit exports the complete `0003` key. Change the file extension from reg to txt and save it in a place accessible from macOS.
-
-<img src="img/MorePoweTool-1.png" width="440">
-	
-<img src="img/MorePoweTool-2.png" width="440">
-
-**Note**: We don't need to access the Registry to find the PP_PhmSoftPowerPlayTable value. The "Save" button will export the registry file which has only the PhmSoftPowerPlayTable block, in this way it's easier to get the data.
-
- ### Phase 2 on macOS
-
-***SSDT Method:***
-
-You can read [here](./SSDT/README.md) how to extract PowerPlayTable directly from the ROM file (defualto sPPT, Zero RPM enabled) or from Windows registry file (sPPT with customized Zero RPM) and convert it to hexadecimal data that can be used within an SSDT file instead of writing it to the DeviceProperties key of `config.plist`. Conversions are easily made thanks to scripts developed by [klich3](https://github.com/klich3/).
-
-***DeviceProperty Method:***
-
-Fix the text file to be able to use it in OpenCore. I used BBEdit but any app capable of editing plain text can do.
-
-- Remove all keys but `PP_PhmSoftPowerPlayTable`
-- Remove string `"PP_PhmSoftPowerPlayTable"=hex:` at the beginning of the text
-- Find and replace:
-	- remove commas
-	- Remove leading spaces of all lines
-	- remove backslashes at the end of the lines
-	- remove line breaks to get a single-line string, you have to use Grep for this in the Find and Replace dialog.
-
-Text before is like this (not the whole string is displayed):
-
-> "PP_PhmSoftPowerPlayTable"=hex:a6,09,12,00,02,22,03,ae,09,00,00,22,43,00,00,83,&bsol;
->  &nbsp;&nbsp;00,18,00,00,00,1c,00,00,00,00,00,00,76,00,00,00,00,00,00,00,00,00,00,00,00,&bsol;
->  &nbsp;&nbsp;00,01,00,00,00,01,00,00,00,0d,00,00,00,52,0b,00,00,00,05,00,00,e8,03,00,00,&bsol;
-
-After is like this:
-
-> a6091200022203ae090000224300008300180000001c000000000000760000000000000000000000000001000000010000000d000000520b000000050000e8030000
-
-It is necessary to know the PCI device path to the graphics card, it can be done with the `gfxutil` tool (Terminal) or from Hackintool in the PCIe tab. In my case is:
-`PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`
-
-Note: Device Name and Device Path may be different on your system.
-
-Open config.plist file, look for \
-`DeviceProperties >> Add >> PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)`\
-and add the PP_PhmSoftPowerPlayTable key, its value as Data is the long text string.
-	
-<img src="img/DeviceProperties.png">
- 
-Restart. If everything went well, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 35º and performance of the GPU and scores in tests have not changed.
-
-<img src="img/Temperature.png" width="600">
 
 ---
 
