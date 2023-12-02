@@ -1,4 +1,4 @@
-# XFX RX 6600 XT on macOS: disable Zero RPM with SoftPowerPlayTable
+# XFX RX 6600 XT on macOS: disable Zero RPM with SoftPowerPlayTable on SSDT or config.plist
 
 <table>
  <tr><td><b>XFX Speedster QICK 308 AMD Radeon RX 6600 XT Black 8GB GDDR6</b></td></tr>
