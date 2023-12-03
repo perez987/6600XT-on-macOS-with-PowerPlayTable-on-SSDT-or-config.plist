@@ -5,6 +5,8 @@ Windows 10 and 11 can make a copy of these energy profiles in the PP_PhmSoftPowe
 This SPPT key can be read and modified by some utilities. Thanks to this, it is possible to modify parameters of the operation of the graphics card, changing their behavior and/or energy management and port these settings to macOS.**
 
 ### Go [here](README-6600.md) to get info about the XFX RX 6600 XT graphics card on macOS.
+
+---
  
 ### Zero RPM
  
@@ -15,6 +17,8 @@ The quickest and most effective way to achieve this is by disabling Zero RPM so 
 ### SoftPowerPlayTable
  
 One way to disable Zero RPM on macOS without changing any other parameters is by using the SPPT table created in Windows. To obtain the SPPT table you have to go to Windows, where it is generated as a registry key and exported to a file that we take to macOS where the file is modified and added to an SSDT file or to the OpenCore config.plist file.
+
+---
  
 ## PHASE 1 ON WINDOWS
  
@@ -47,16 +51,16 @@ Regedit exports the entire 003 key, not just the PP_PhmSoftPowerPlayTable key.
 Save the files somewhere accessible from macOS.
 
 **Method 2**: The simplest method is, from MorePowerTool, click on the Save button >> in the Save file dialog choose Save As REG (registry file) >> a text file with REG extension is generated that contains only the PP_PhmSoftPowerPlayTable key. Save the file somewhere accessible from macOS.
- 
-## PHASE 2 ON MACOS
+
+---
+
+## PHASE 2 ON MACOS: softPowerPlayTable in SSDT
  
 You must modify the text files to be able to use them in OpenCore >> Convert the text of the Windows files into a formatted hexadecimal string so that it can be included in an SSDT (softPowerPlayTable in SSDT) or in config.plist (softPowerPlayTable in DeviceProperties).
- 
-#### softPowerPlayTable in SSDT
- 
+  
 Use GPU-Z in Windows to export your graphics card ROM as discussed above.
  
-**SPPT table from ROM**
+### SPPT table from ROM
 
 Extract SPPT table from ROM >> Download *upp* and run it next to the ROM file.
 
@@ -95,7 +99,7 @@ Copy the content of the Terminal window to save it to a text file or paste it di
  
 Note: Keep in mind that with this method we have the factory default table. It has not been changed in regards to the Zero RPM feature.
  
-**2.- SPPT table from Windows registry**
+### SPPT table from Windows registry
  
 This method allows you to bring a modified SPPT table to macOS to disable or alter the Zero RPM feature, customizing the behavior of the graphics card.
 In the Windows phase we have saved the SPPT table as PP_PhmSoftPowerPlayTable key in Windows registry and we have taken it to 3 different files:
@@ -105,7 +109,7 @@ In the Windows phase we have saved the SPPT table as PP_PhmSoftPowerPlayTable ke
 	* Export as REG: Registry 5 file format
 	* Export as TXT: hierarchical text format.
 
-Either of the 3 files must be transformed into a valid hexadecimal string for SSDT. This transformation can be automated using the script win-reg-to-hex-dsl.sh or manually step by step.
+Either of the 3 files must be transformed into a valid hexadecimal string for SSDT. This transformation can be automated using the scripts `win-reg-to-hex-dsl.sh` / `win-reg-txt-to-hex-dsl.sh`or manually step by step.
  
 **Automated method**
  
@@ -129,7 +133,7 @@ Buffer()
 
 Copy the content of the Terminal window to save it to a text file or paste it directly to the SSDT.
  
-**Manual method (only REG registry file)**
+**Manual method (only Windows REG file)**
  
 Open the Windows file with a plain text editor that supports Grep-based replacements (I use BBEdit but there are others that also work) and apply these changes one after another:
 
@@ -147,7 +151,7 @@ Buffer()<br>
 * Add this to the end of the text:<br>
 *}*
  
-**3.- Include the hexadecimal string in the SSDT file**
+### Include the hexadecimal string in the SSDT file
  
 This is the code of a fairly common SSDT used with AMD graphics cards. You can use it as reference.
 
@@ -225,7 +229,7 @@ To know the IOReg path to the graphics card, it can be done with gfxutil tool or
 For better identification of the SSDT, rename it to `SSDT-sPPT.aml` and don't forget to compile it to AML format. When you compile the DSL file to AML, the compiler adjusts the format, calculates the buffer size and adds other elements to the string.<br>
 Place `SSDT-sPPT.aml` in the APCI folder and in config.plist, restart and reload OpenCore.
  
-**4.- Check that the SSDT loads correctly**
+### Check that the SSDT loads correctly
  
 To see if everything is correct, start IORegistryExplorer and compare what you see with this image (PP_PhmSoftPowerPlayTable is one of the properties of GFX0 or whatever the graphics device is called on your system):
  
@@ -239,11 +243,13 @@ If you have added SPPT string with modified Zero RPM, you must see the changes i
  
  ![Zero RPM](img/Zero-RPM-on-off.png)
 
-#### softPowerPlayTable in DeviceProperties
+---
+
+## PHASE 2 ON MACOS: softPowerPlayTable in DeviceProperties
  
 It is another way to bring the SPPT table to macOS as hexadecimal string into DeviceProperties section of config.plist, with the PCI path that corresponds to your graphics card. My personal experience is that the SSDT method always works, both in Monterey, Ventura and Sonoma, however this other method does not always transmit Zero RPM modifications to macOS.
  
-**1.- Preparation of the text**
+### Making the text
  
 We start from the text file with the keys extracted from the Windows registry.
 
@@ -269,7 +275,7 @@ After the changes it looks like this:
 a6091200022203ae0900002243000008300180000001c0000000000007600000000000000000000000001000000010000000d000000520b0000000500 ...
 ```
 
-**2.- OpenCore**
+### OpenCore
  
 You must know the PCI path to the graphics card, it can be done with gfxutil tool or from Hackintool in the PCIe tab >> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M] >> Device Path column >> copy PCI path. In my case is this:<br>
 `PciRoot(0x0)/Pci(0x1.0x0)/Pci(0x0.0x0)/Pci(0x0.0x0)/Pci(0x0.0x0)`
@@ -289,14 +295,18 @@ Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0
 Reboot. If everything went well, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 35º and test scores have not changed.
  
 Note: slight errors in the hexadecimal string can lead to a black screen when reaching the Desktop, it is highly recommended to have an EFI that works and can boot macOS on a USB device or another disk in case of problems.
+
+---
  
-### April 2023 Note: macOS Ventura 13.4
+## April 2023 Note: macOS Ventura 13.4
  
 There are users with macOS Ventura 13.4 who are unable to disable Zero RPM when using the SPPT string. Even with it properly loaded from SSDT or from the OpenCore config.plist file (verifiable using IORegistryExplorer), GPU fans are stopped most of the time and temperature ranges between 50 and 55º (approximately 10º more than in Windows), the same as without SPPT string. This happens most frequently with the SPPT table in config.plist, if the SPPT table is in SSDT it usually works fine.<br>
 There is a way to recover the lost feature. When modifying the vBIOS ROM file in Windows with MorePowerTool, instead of deactivating Zero RPM (unchecking option box), it is left checked but the temperatures at which the fans start and stop are modified. By default they are configured like this: Stop Temperature 50º and Start Temperature 60º.<br>
 I have tried an RX 6600 XT with these settings: Start Temperature to 45º and Stop temperature to 40º. I have written the new registry key and exported it to macOS. With this modification, fans spin and stop with the GPU temperature oscillating between 40 and 45º. GeekBench performance is as expected.
- 
-### Thanks
+
+---
+
+## Thanks
 
 * [Igor'sLAB](https://www.igorslab.de/en/) where I have obtained a lot of information
 * Anton Sychev ([klich3](https://github.com/klich3)), which added the SSDT method to my original text and created the scripts that allow to do it in an automated way.
