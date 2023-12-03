@@ -283,11 +283,11 @@ Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0
  
 ![DeviceProperties](img/DeviceProperties.png)
 
-```xml
+```html
 <key>PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)</key>
 <dict>
          <key>PP_PhmSoftPowerPlayTable</key>
-         <data>>Long string, seen as hexadecimal in PLIST file editors and as Base64 in plain text editors</data>
+         <data>Long string, seen as hexadecimal in PLIST file editors and as Base64 in plain text editors</data>
 </dict>
 ```
 
