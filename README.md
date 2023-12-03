@@ -4,7 +4,7 @@
 Windows 10 and 11 can make a copy of these energy profiles in the PP_PhmSoftPowerPlayTable registry key whose value is so called SoftPowerPlayTable (SPPT), long hexadecimal string. It is a way to have a quick reference by the operating system.<br>
 This SPPT key can be read and modified by some utilities. Thanks to this, it is possible to modify parameters of the operation of the graphics card, changing their behavior and/or energy management and port these settings to macOS.**
 
-### Go [here](README-6600.md) to get detailed info about the XFX RX 6600 XT graphics card.
+### Go [here](README-6600.md) to get info about the XFX RX 6600 XT graphics card on macOS.
  
 ### Zero RPM
  
