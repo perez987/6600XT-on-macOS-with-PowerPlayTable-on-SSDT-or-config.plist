@@ -266,7 +266,6 @@ Text before the transformation looks like this (the entire string is not shown, 
 ```
 "PP_PhmSoftPowerPlayTable"=hex:a6,09,12,00,02,22,03,ae,09,00,00,22,43,00,00,83,\
 00,18,00,00,00,1c,00,00,00,00,00,00,76,00,00,00,00,00,00,00,00,00,00,00,00, \
-...
 ```
 
 After the changes it looks like this:
