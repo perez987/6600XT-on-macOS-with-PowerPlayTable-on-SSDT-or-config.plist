@@ -9,7 +9,7 @@ DefinitionBlock ("", "SSDT", 2, "DRTNIA", "AMDGPU", 0x00001000)
         {
             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
             {
-                Local0 = Package (0x02)
+                Local0 = Package ()
                 {
 					
 				// Insert here your code
