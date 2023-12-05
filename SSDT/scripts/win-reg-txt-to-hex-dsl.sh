@@ -4,9 +4,9 @@
 #▄█ ░█░ █▄▄ █▀█ ██▄ ▀▄▀
 
 #Author: <Anton Sychev> (anton at sychev dot xyz) 
-#win-reg-dump-TXT-to-hex-dsl.sh (c) 2023 
+#win-reg-txt-to-hex-dsl (c) 2023 
 #Created:  2023-11-22 23:29:47 
-#Desc: extract PPT from reg export file and convert to hex dsl format just simply run and copy and paste
+#Desc: extract PPT from reg export file and convert to hex dsl format, just simply run and copy / paste
 
 
 export LC_ALL=C

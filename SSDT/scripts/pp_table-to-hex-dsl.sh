@@ -4,14 +4,14 @@
 #▄█ ░█░ █▄▄ █▀█ ██▄ ▀▄▀
 
 #Author: <Anton Sychev> (anton at sychev dot xyz) 
-#win-reg-dump-TXT-to-hex-dsl.sh (c) 2023 
+#pp_table-to-hex-dsl.sh (c) 2023 
 #Created:  2023-11-22 23:29:47 
 #Desc: Convert pp_table to hex dsl format just simply run and copy and paste
 #Sample:
 #   With custom path:
 #   ./pp_table-to-hex-dsl.sh <file>
 #   ./pp_table-to-hex-dsl.sh extracted.pp_table
-#   Without custom path put ppt file in same folder and run:
+#   Without custom path put extracted.pp_table file in the same folder and run:
 #   ./pp_table-to-hex-dsl.sh
 
 thefile="${1:-./extracted.pp_table}"
