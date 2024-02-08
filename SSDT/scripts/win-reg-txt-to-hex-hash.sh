@@ -4,9 +4,26 @@
 #▄█ ░█░ █▄▄ █▀█ ██▄ ▀▄▀
 
 #Author: <Anton Sychev> (anton at sychev dot xyz) 
-#win-reg-txt-to-hex-dsl (c) 2023 
-#Created:  2023-11-22 23:29:47 
-#Desc: extract PPT from reg export file and convert to hex dsl format, just simply run and copy / paste
+#win-reg-txt-to-hex-hash (c) 2023 
+#Created:  2024-02-08 11:04
+#Desc: extract PPT from reg export file and convert to hex hash format 
+#       for implement in kext or directly in your config.plist file
+#
+#<key>PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)</key>
+#<dict>
+#         <key>PP_PhmSoftPowerPlayTable</key>
+#         <data>RESULT HAST GOES HERE</data>
+#</dict>
+#
+#--------------------------------
+#
+#Usage: 
+#   1) Print result to console just simply run and copy / paste
+#       ./win-reg-txt-to-hex-hash.sh <input_file.reg>
+#       ./win-reg-txt-to-hex-hash.sh /path/to/file.reg
+#   2) Save result to file
+#       ./win-reg-txt-to-hex-hash.sh <input_file.reg> > output.txt
+
 
 
 export LC_ALL=C
@@ -46,14 +63,7 @@ while IFS= read -r line; do
 done <<< "$BLOCK"
 
 formatted_content=$(echo "$PPT" | sed 's/ - / /g')
-
-formatted_content=$(echo "$formatted_content" | sed 's/^[[:xdigit:]]\{8\}\s*//' | sed "s/   //g")
-formatted_content=$(echo "$formatted_content" | sed 's/.\{47\}/&  \/\//g')
-formatted_content=$(echo "$formatted_content" | sed 's/\([0-9a-fA-F]\{2\}\)/0x\1, /g')
-formatted_content=$(echo "$formatted_content" | sed 's/,  \./ \/\/\./g' | sed 's/\/\/.*//g' | sed 's/  //g' | sed 's/^/\t\t/')
+formatted_content=$(echo "$formatted_content" | sed -e 's/^[^=]*=hex://; s/,//g; s/,\\//g; s/\\//g' | tr '[:lower:]' '[:upper:]')
 formatted_content=$(echo "$formatted_content" | tr -d '[:space:]') 
-formatted_content=$(echo "$formatted_content" | fold -w 80 | sed 's/^/\t\t/')
 
-printf "\t\"PP_PhmSoftPowerPlayTable\",\n\tBuffer ()\n\t{\n" 
 printf "$formatted_content" 
-printf "\n\t}\n"
