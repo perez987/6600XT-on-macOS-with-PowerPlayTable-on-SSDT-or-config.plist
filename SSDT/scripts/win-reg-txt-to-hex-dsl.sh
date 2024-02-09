@@ -7,7 +7,9 @@
 #win-reg-txt-to-hex-dsl (c) 2023 
 #Created:  2023-11-22 23:29:47 
 #Desc: extract PPT from reg export file and convert to hex dsl format, just simply run and copy / paste
-
+#Usage example: 
+#   ./win-reg-txt-to-hex-dsl.sh <file>
+#   ./win-reg-txt-to-hex-dsl.sh sPPT-reg-txt.txt
 
 export LC_ALL=C
 
@@ -29,10 +31,14 @@ file_content=$(cat "$file_path")
 PPT=""
 prev_line=""
 
-BLOCK=$(echo -e "$file_content" | grep -A 200 'PP_PhmSoftPowerPlayTable.*')
+BLOCK=$(echo -e "$file_content" | grep -A 5000 'PP_PhmSoftPowerPlayTable.*')
 
 while IFS= read -r line; do
     if [[ "$line" == *"Name:"* || "$line" == *"Type:"* || "$line" == *"Data:"* ]]; then
+        continue
+    fi
+
+    if [[ "$line" =~ ^[^:]+: ]]; then
         continue
     fi
 

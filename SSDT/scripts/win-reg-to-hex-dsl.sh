@@ -7,7 +7,9 @@
 #win-reg-to-hex-dsl (c) 2023 
 #Created:  2023-11-22 23:29:47 
 #Desc: extract PPT from reg export file and convert to hex dsl format, just simply run and copy / paste
-
+#Usage example:
+#   ./win-reg-to-hex-dsl.sh <file>
+#   ./win-reg-to-hex-dsl.sh sPPT-reg.reg
 
 export LC_ALL=C
 
