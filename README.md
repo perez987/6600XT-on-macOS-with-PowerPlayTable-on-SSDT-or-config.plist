@@ -1,4 +1,4 @@
-# AMD 6600 on macOS: custom Zero RPM with softPowerPlayTable on SSDT or config.plist
+# AMD 6600 on macOS: Zero RPM disabled with softPowerPlayTable on SSDT or config.plist
 
 AMD PowerPlay technology allows graphics card to vary performance based on demand, switching between performance and power saving. It has automatic operating modes based on predefined parameters It also allows user settings.
 
@@ -12,8 +12,10 @@ This SPPT key can be read and modified by some utilities. Thanks to this, it is 
 
 ### Zero RPM
 
-AMD Radeon 5000 and 6000 series cards come from factory with Zero RPM function activated so that fans are stopped below a temperature (generally 60º), this makes them completely silent except when the graphics processor is demanded (tests , games, etc.).<br>
+AMD Radeon 5000 and 6000 series cards come from factory with Zero RPM function activated so that fans are stopped below a temperature (60º), this makes them completely silent except when graphics processor is demanded (tests, games, etc.).
+
 On my PC, for example, the base temperature in Windows is 35-40º and in macOS it is 50-55º. Although these are safe temperatures for daily use, some users would prefer to have values similar to those of Windows.
+
 The quickest and most effective way to achieve this is by disabling Zero RPM so that fans are spinning all the time and not just above a predefined temperature. However, this is very easy to do on Windows with the Radeon software but on macOS this option does not exist.
 
 ### SoftPowerPlayTable
@@ -29,16 +31,25 @@ We need 2 apps:
 * GPU-Z (from TechPowerUp): Loads the firmware (vBIOS) of the graphics card and exports it to a ROM file that can be read by MorePowerTool.
 * MorePowerTool (MPT) (from Igor'sLAB): Reads the ROM file with the firmware and manages the PP_PhmSoftPowerPlayTable registry key (delete or create new).
 
-GPU-Z loads the GPU specifications and allows you to export everything to a file with ROM extension. To export (from the Graphics Card tab) use the arrow icon that comes out of a rectangle below the AMD Radeon logo, to the right of the text box with the BIOS version. In the Advanced tab you have to write down the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when looking for the sPPT key in the Windows registry.
+**GPU-Z** loads the GPU specifications and allows you to export everything to a file with ROM extension.
+
+* To export (Graphics Card tab) use the arrow icon that comes out of a rectangle below the AMD Radeon logo, to the right of the text box with the BIOS version
+
+* In the Advanced tab you have to write down the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when looking for the SPPT key in the Windows registry.
 
 <img title="" src="img/GPU-Z-1.png" alt="" width="500px">
 </br>
 <img title="" src="img/GPU-Z-2.png" alt="" width="500px">
 
-MPT is where the task of generating the SPPT key with Zero RPM disabled is performed. At the top, choose the GPU model you have installed; it usually shows the bus number that we noted previously at the beginning of the name (3 in this case).
-It is advisable to delete the table that may already exist in the registry from the Delete SPPT button.
-Load the ROM file generated with GPU-Z (Load button).
-Modify the Zero RPM option by unchecking the checkbox in 2 places: Features and Fan tabs.
+**MPT** is where the task of generating the SPPT key with Zero RPM disabled is performed.
+
+* At the top, choose the GPU model you have installed; it usually shows the bus number (noted above) at the beginning of the name (3 in this case).
+
+* It is advisable to delete the table that may already exist in the registry from the Delete SPPT button.
+
+* Load the ROM file generated with GPU-Z (Load button).
+
+* Modify the Zero RPM option by unchecking the checkbox in 2 tabs: Features and Fan.
 
 <img title="" src="img/MorePoweTool-1.png" alt="" width="500px">
 </br>
@@ -49,7 +60,7 @@ There are 2 ways to export the configuration, both ways end up in a text file wi
 <u>Method 1</u>: A more complex method is to write the new SPPT table in the registry from the Write SPPT button, this key is located in
 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\`
 
-* There are some numbered keys here, choose the one that matches the bus number you have written down before: `0003\PP_PhmSoftPowerPlayTable` in my case.
+* There are some numbered keys here, choose the one that matches the bus number you have written down before: 0003\PP_PhmSoftPowerPlayTable in my system.
 * With key 0003 selected, export it as registry file (REG) or text file (TXT). File structure is different in each case. Both are valid but REG file has a more readable structure.
 * Regedit exports the entire 003 key, not just the PP_PhmSoftPowerPlayTable key.
 * Save the files somewhere accessible from macOS.
@@ -64,13 +75,11 @@ There are 2 ways to export the configuration, both ways end up in a text file wi
 
 ## PHASE 2 ON MACOS: softPowerPlayTable in SSDT
 
-You must modify the text files to be able to use them in OpenCore >> Convert the text of the Windows files into a formatted hexadecimal string so that it can be included in an SSDT (softPowerPlayTable in SSDT) or in config.plist (softPowerPlayTable in DeviceProperties).
-
-Use GPU-Z in Windows to export your graphics card ROM as discussed above.
+You must modify the text files to be able to use them in OpenCore -> Convert the text of the Windows files into a formatted hexadecimal string so that it can be included in an SSDT (`softPowerPlayTable in SSDT`) or in config.plist (`softPowerPlayTable in DeviceProperties`).
 
 ### SPPT table from ROM
 
-Extract SPPT table from ROM: Download *upp* and run it next to the ROM file.
+Extract SPPT table from ROM: Download `upp` and run it next to the ROM file.
 
 ```bash
 git clone https://github.com/sibradzic/upp.git && cd upp
@@ -80,79 +89,55 @@ sudo python3 -m pip install click
 upp --pp-file=extracted.pp_table extract -r <rom_file>.rom
 ```
 
-- After running *upp*, a file called `extracted.pp_table` is created.
+* After running `upp`, a file called extracted.pp_table is created.
+* In the SSDT/scripts folder, simply click on `PPT_script.command`.
+* The program will prompt you to drag the file into the terminal.
+* You can drag the default extracted.pp_table file generated by `upp` to transform it into a hexadecimal string that is inserted into the SSDT.
+* The final text will appear in the Result folder within the SSDT/scripts folder. It will have two versions, one in plain text (results.txt) and the other as DSL (results.dsl).
+* Copy the content of the selected file and paste it on your SSDT.
 
-- In the scripts folder, simply click on `PPT_script.command`.
-
-- The program will prompt you to drag the file into the terminal.
-
-- You can drag the default `extracted.pp_table` file generated by *upp* to transform it into a hexadecimal string that is inserted into the SSDT.
-
-- The final text will appear in the Result folder within the script folder. It will have two versions, one in text format and another directly in DSL format.
-
-```
-"PP_PhmSoftPowerPlayTable"
-    Buffer()
-    {
-        /* 0000 */ 0xA6, 0x09, 0x0F, 0x00, 0x02, 0x22, 0x03, 0xAF, 0x09, 0x00, 0x00, 0x77, 0x40, 0x00, 0x00, 0x80,
-        ...
-        /* 09A0 */ 0x00 , 0x00 , 0x00 , 0x00 , 0x1E , 0x06 // ......
-    }
-```
-
-Copy the content of the Plain Text file and paste it directly to your SSDT file.
-
-Note: Keep in mind that with this method we have the factory default table. It has not been changed in regards to the Zero RPM feature.
+<u>Note</u>: Keep in mind that with this method we have the factory default table. It has not been changed in regards to the Zero RPM feature.
 
 ### SPPT table from Windows registry
 
-This method allows you to bring a modified SPPT table to macOS to disable or alter the Zero RPM feature, customizing the behavior of the graphics card.
-In the Windows phase we have saved the SPPT table as PP_PhmSoftPowerPlayTable key in Windows registry and we have taken it to 3 different files:
+This method allows you to bring a modified SPPT table to macOS to disable or modify the Zero RPM feature, customizing the behavior of the graphics card. In the Windows phase we have saved the SPPT table as PP_PhmSoftPowerPlayTable key in Windows registry and we have taken it to 3 different files:
 
-* MorePoweTool >> Save >> Save As REG: contains only the PP_PhmSoftPowerPlayTable key
-* MorePowerTool >> Write SPPT >> open Registry Editor >> look for the key in the registry according to the instructions above >> export the entire graphics card section, including but not only PP_PhmSoftPowerPlayTable:
+* MorePoweTool -> Save -> Save As REG: contains only the PP_PhmSoftPowerPlayTable key
+* MorePowerTool -> Write SPPT -> open Registry Editor -> look for the key in the registry according to the instructions above -> export the entire graphics card section, including but not only PP_PhmSoftPowerPlayTable:
   * Export as REG: Registry 5 file format (preferred)
   * Export as TXT: hierarchical text format.
 
-Either of the 3 files must be transformed into a valid hexadecimal string for SSDT. This transformation can be automated using the scripts `PPT_script.command`or manually step by step.
+Either of the 3 files must be transformed into a valid hexadecimal string for SSDT. This transformation can be automated using the script `PPT_script.command`or manually step by step.
 
-<u>Automated method</u>
+**<u>Automated method</u>**
 
- In the scripts folder, simply click on `PPT_script.command`.
+* In the SSDT/scripts folder, simply click on `PPT_script.command`.
+* The program will prompt you to drag the file into the terminal.
+* You can drag & drop the REG or TXT file to transform it into a hexadecimal string that is inserted into the SSDT.
+* The final text will appear in the Result folder within the SSDT/scripts folder. It will have two versions, one in plain text (results.txt) and the other as DSL (results.dsl).
+* Copy the content of the selected file and paste it on your SSDT.
 
-The program will prompt you to drag the file into the terminal.
 
-View the results in the `Results` folder.
-
-```
-"PP_PhmSoftPowerPlayTable",
-Buffer()
-{
-      0xa6,0x09,0x12,0x00,0x02,0x22,0x03,0xae,0x09,0x00,0x00,0x22,0x43,0x00,0x00,0x83,
-      ...
-      0x00,0x00,0x00,0x00,0x1e,0x06
-}
-```
-
-If you want to use the text file, you must paste it into your SSDT.
-
-<u>Manual method</u> (only Windows REG file)
+**<u>Manual method</u>** (only Windows REG file)
 
 Open the Windows file with a plain text editor that supports Grep-based replacements (I use BBEdit but there are others that also work) and apply these changes one after another:
 
-* Delete all registry keys except PP_PhmSoftPowerPlayTable
-* Delete the initial string "PP_PhmSoftPowerPlayTable"=hex:
+* Delete all registry keys except `PP_PhmSoftPowerPlayTable`
+* Delete the initial string `"PP_PhmSoftPowerPlayTable"=hex:`
 * Remove spaces from the beginning of all lines
-* Remove backslashes (\) from line endings
-* Replace the commas with ' , 0x' without the quotes
-* Add 0x to the beginning of the text
+* Remove backslashes `\` from line endings
+* Replace the commas with ` , 0x`
+* Add `0x` to the beginning of the text
 * Remove all line breaks (you have to use Grep in Find and Replace) -> string on a single line
-* Add this to the beginning of the text:<br>
-  *"PP_PhmSoftPowerPlayTable",<br>
-  Buffer()<br>
-  {*
-* Add this to the end of the text:<br>
-  *}*
+* Add this to the beginning of the text:
+  
+   "PP_PhmSoftPowerPlayTable",<br>
+   Buffer()<br>
+   {
+
+* Add this to the end of the text:
+  
+   }
 
 ### Include the hexadecimal string in the SSDT file
 
@@ -225,11 +210,13 @@ The text copied earlier from the Terminal window is pasted into the SSDT, right 
 // End mark
 ```
 
-Remember to modify the IOReg path of your graphics card based on your system, it may be different.<br>
-To know the IOReg path to the graphics card, it can be done with gfxutil tool or from Hackintool in the PCIe tab >> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M] >> Device Path column >> copy IOReg path. In my case is:<br>
-`PCI0.PEG0.PEGP.BRG0.GFX0`
+Remember to modify the IOReg path of your graphics card based on your system, it may be different. To know the IOReg path to the graphics card, it can be done with
 
-For better identification of the SSDT, rename it to `SSDT-sPPT.aml` and don't forget to compile it to AML format. When you compile the DSL file to AML, the compiler adjusts the format, calculates the buffer size and adds other elements to the string.<br>
+- gfxutil tool
+- Hackintool in the PCIe tab -> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M] -> Device Path column -> copy IOReg path. In my system is: `PCI0.PEG0.PEGP.BRG0.GFX0`
+
+For better identification of the SSDT, rename it to `SSDT-SPPT.aml` and don't forget to compile it to AML format. When you compile the DSL file to AML, the compiler adjusts the format, calculates the buffer size and adds other elements.
+
 Place `SSDT-sPPT.aml` in the APCI folder and in config.plist, restart and reload OpenCore.
 
 ### Check that the SSDT loads correctly
@@ -241,9 +228,7 @@ To see if everything is correct, start IORegistryExplorer and compare what you s
 If you have added SPPT string with modified Zero RPM, you must see the changes in GPU temperatures and fans spin. In the image there is 3 conditions, graphics made when there is not high demand:
 
 * Zero RPM off: Zero RPM disabled, temps don't go upper 35º
-
 * Zero RPM 45º: fans start at 45º and stop at 40º
-
 * Zero RPM on: default setting, fans stop below 60º, temps around 50-55º.
   
   ![Zero RPM](img/Zero-RPM-on-off.png)
