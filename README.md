@@ -34,7 +34,6 @@ We need 2 apps:
 **GPU-Z** loads the GPU specifications and allows you to export everything to a file with ROM extension.
 
 * To export (Graphics Card tab) use the arrow icon that comes out of a rectangle below the AMD Radeon logo, to the right of the text box with the BIOS version
-
 * In the Advanced tab you have to write down the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when looking for the SPPT key in the Windows registry.
 
 <img title="" src="img/GPU-Z-1.png" alt="" width="500px">
@@ -44,11 +43,8 @@ We need 2 apps:
 **MPT** is where the task of generating the SPPT key with Zero RPM disabled is performed.
 
 * At the top, choose the GPU model you have installed; it usually shows the bus number (noted above) at the beginning of the name (3 in this case).
-
 * It is advisable to delete the table that may already exist in the registry from the Delete SPPT button.
-
 * Load the ROM file generated with GPU-Z (Load button).
-
 * Modify the Zero RPM option by unchecking the checkbox in 2 tabs: Features and Fan.
 
 <img title="" src="img/MorePoweTool-1.png" alt="" width="500px">
@@ -57,7 +53,7 @@ We need 2 apps:
 
 There are 2 ways to export the configuration, both ways end up in a text file with the SPPT table:
 
-<u>Method 1</u>: A more complex method is to write the new SPPT table in the registry from the Write SPPT button, this key is located in
+<b><u>Method 1</u></b>: A more complex method is to write the new SPPT table in the registry from the Write SPPT button, this key is located in
 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\`
 
 * There are some numbered keys here, choose the one that matches the bus number you have written down before: 0003\PP_PhmSoftPowerPlayTable in my system.
@@ -65,7 +61,7 @@ There are 2 ways to export the configuration, both ways end up in a text file wi
 * Regedit exports the entire 003 key, not just the PP_PhmSoftPowerPlayTable key.
 * Save the files somewhere accessible from macOS.
 
-<u>Method 2</u>: The simplest method is, from MorePowerTool, click on the Save button:
+<b><u>Method 2</u></b>: The simplest method is, from MorePowerTool, click on the Save button:
 
 * In the Save file dialog choose Save As REG (registry file)
 * A text file with REG extension is generated that contains only the PP_PhmSoftPowerPlayTable key
