@@ -31,16 +31,18 @@ We need 2 apps:
 
 GPU-Z loads the GPU specifications and allows you to export everything to a file with ROM extension. To export (from the Graphics Card tab) use the arrow icon that comes out of a rectangle below the AMD Radeon logo, to the right of the text box with the BIOS version. In the Advanced tab you have to write down the Bus number in the DeviceLocation key, this number (on my system it is 3) is important later, when looking for the sPPT key in the Windows registry.
 
-![GPUZ](img/GPU-Z-1.png)
-![GPUZ](img/GPU-Z-2.png)
+<img title="" src="img/GPU-Z-1.png" alt="" width="500px">
+</br>
+<img title="" src="img/GPU-Z-2.png" alt="" width="500px">
 
 MPT is where the task of generating the SPPT key with Zero RPM disabled is performed. At the top, choose the GPU model you have installed; it usually shows the bus number that we noted previously at the beginning of the name (3 in this case).
 It is advisable to delete the table that may already exist in the registry from the Delete SPPT button.
 Load the ROM file generated with GPU-Z (Load button).
 Modify the Zero RPM option by unchecking the checkbox in 2 places: Features and Fan tabs.
 
-![MPT](img/MorePoweTool-1.png)
-![MPT](img/MorePoweTool-2.png)
+<img title="" src="img/MorePoweTool-1.png" alt="" width="500px">
+</br>
+<img title="" src="img/MorePoweTool-2.png" alt="" width="500px">
 
 There are 2 ways to export the configuration, both ways end up in a text file with the SPPT table:
 
@@ -290,11 +292,11 @@ Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0
 <key>PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)</key>
 <dict>
          <key>PP_PhmSoftPowerPlayTable</key>
-         <data>Long string, seen as hexadecimal in PLIST file editors and as Base64 in plain text editors</data>
+         <data>Long string, seen as: hexadecimal in PLIST file editors and as Base64 in plain text editors</data>
 </dict>
 ```
 
-Reboot. If everything went well, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 35º and test scores have not changed.
+Reboot. If everything goes fine, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 40º and test scores have not changed.
 
 Note: slight errors in the hexadecimal string can lead to a black screen when reaching the Desktop, it is highly recommended to have an EFI that works and can boot macOS on a USB device or another disk in case of problems.
 
