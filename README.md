@@ -189,7 +189,7 @@ Remember to modify the IOReg path of your graphics card based on your system, it
 - *gfxutil* tool.
 - Hackintool: PCIe tab -> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M]) -> Device Path column -> Context menu with mouse -> Copy IOReg path. In my system is: `PCI0.PEG0.PEGP.BRG0.GFX0`.
 
-For better identification of the SSDT, rename it to `SSDT-SPPT.aml` and don't forget to compile it to AML format. When you compile the DSL file to AML, the compiler sets format, buffer size and adds other elements.
+For better identification of the SSDT, rename it to `SSDT-SPPT.aml` and don't forget to compile it to AML format. When you compile the DSL file to AML, the compiler formats text, fills buffer sizes and adds  header with comments.
 
 Place `SSDT-SPPT.aml` in the APCI folder and in config.plist, restart and reload OpenCore.
 
