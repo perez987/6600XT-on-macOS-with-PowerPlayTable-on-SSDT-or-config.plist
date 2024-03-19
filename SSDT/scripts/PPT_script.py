@@ -204,10 +204,10 @@ DefinitionBlock ("", "SSDT", 2, "DRTNIA", "AMDGPU", 0x00001000)
         #result join with \n
         result = "\n".join(result)
         
-        self.write_to_file("result.txt", result)
+        self.write_to_file("Result.txt", result)
        
         dsl_file_conente = self.create_dsl(result)
-        self.write_to_file("result.dsl", dsl_file_conente)
+        self.write_to_file("Result.dsl", dsl_file_conente)
 
     
         print("")
