@@ -56,15 +56,15 @@ There are 2 ways to export the configuration, both ways end up in a text file wi
 <b><u>Method 1</u></b>: A more complex method is to write the new SPPT table in the registry from the Write SPPT button, this key is located in
 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\`
 
-* There are some numbered keys here, choose the one that matches the bus number you have written down before: 0003\PP_PhmSoftPowerPlayTable in my system.
+* There are some numbered keys here, choose the one that matches the bus number you have written down before: `0003\PP_PhmSoftPowerPlayTable` in my system.
 * With key 0003 selected, export it as registry file (REG) or text file (TXT). File structure is different in each case. Both are valid but REG file has a more readable structure.
 * Regedit exports the entire 003 key, not just the PP_PhmSoftPowerPlayTable key.
 * Save the files somewhere accessible from macOS.
 
 <b><u>Method 2</u></b>: The simplest method is, from MorePowerTool, click on the Save button:
 
-* In the Save file dialog choose Save As REG (registry file)
-* A text file with REG extension is generated that contains only the PP_PhmSoftPowerPlayTable key
+* In the Save file dialog choose Save As REG (registry file).
+* A text file with REG extension is generated that contains only the PP_PhmSoftPowerPlayTable key.
 * Save the file somewhere accessible from macOS.
 
 ---
@@ -271,5 +271,6 @@ I have tried an RX 6600 XT with these settings: Start Temperature to 45º and St
 
 ## Thanks
 
-* [Igor'sLAB](https://www.igorslab.de/en/) where I have obtained a lot of information
-* Anton Sychev ([klich3](https://github.com/klich3)), which added the SSDT method to my original text and created the scripts that allow to do it in an automated way.
+* [Igor'sLAB](https://www.igorslab.de/en/) where I have got a lot of information.
+* [TechPowerUp](https://www.techpowerup.com/gpuz/), GPU-Z developers.
+* Anton Sychev ([klich3](https://github.com/klich3)), SSDT method author and `PPT_script.command` script developer.
