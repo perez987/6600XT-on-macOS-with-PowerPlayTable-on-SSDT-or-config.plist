@@ -205,7 +205,7 @@ To see if everything is right, run IORegistryExplorer and compare what you see w
 
 If you have added SPPT string with modified Zero RPM, you must see the changes in GPU temperatures and fans spin. In the image there is 3 conditions, graphics made when there is not high demand:
 
-- Zero RPM off: Zero RPM disabled, temps don't go upper 35º
+- Zero RPM off: Zero RPM disabled, temperature does not rise above 35º
 - Zero RPM 45º: fans start at 45º and stop at 40º
 - Zero RPM on: default setting, fans stop below 60º, temps around 50-55º.  
   
