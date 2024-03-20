@@ -6,6 +6,8 @@ Windows 10 and 11 can make a copy of these energy profiles in the PP_PhmSoftPowe
 
 This SPPT key can be read and modified by some utilities. Thanks to this, it is possible to modify parameters of the operation of the graphics card, changing their behavior and/or energy management and port these settings to macOS.
 
+---
+
 ### Go [here](README-6600.md) to get info about the XFX RX 6600 XT graphics card on macOS.
 
 ---
@@ -71,9 +73,11 @@ There are 2 ways to export the configuration, both ways end up in a text file wi
 
 ## PHASE 2 ON MACOS: softPowerPlayTable in SSDT
 
-You must modify the text files to be able to use them in OpenCore -> Convert the text of the Windows files into a formatted hexadecimal string so that it can be included in an SSDT (`softPowerPlayTable in SSDT`) or in config.plist (`softPowerPlayTable in DeviceProperties`).
+Convert the text of the Windows files into a formatted hexadecimal string so that it can be included in SSDT (`softPowerPlayTable in SSDT`) or in config.plist (`softPowerPlayTable in DeviceProperties`) and loaded by OpenCore.
 
-### softPowerPlayTable table from ROM
+This task is possible thanks to Anton Sychev ([klich3](https://github.com/klich3)) and the scripts he has developed to make it very simple. 
+
+### softPowerPlayTable table from GPU ROM
 
 Extract SPPT table from ROM: Download `upp` and run it next to the ROM file.
 
