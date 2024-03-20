@@ -188,10 +188,10 @@ SPPT table must go  right between these comment lines:
 // End mark
 ```
 
-Remember to modify the IOReg path of your graphics card based on your system, it may be different. To know the IOReg path to the graphics card, it can be done with
+Remember to modify the IOReg path of your graphics card based on your system, it may be different. To know the IOReg path to the graphics card, it can be done with:
 
 - *gfxutil* tool.
-- Hackintool: PCIe tab -> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M]) -> Device Path column -> Context menu with mouse -> Copy IOReg path. In my system is: `PCI0.PEG0.PEGP.BRG0.GFX0`.
+- Hackintool: PCIe tab -> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M]) -> Device Path column -> Context menu -> Copy IOReg path. In my system is: `PCI0.PEG0.PEGP.BRG0.GFX0`.
 
 For better identification of the SSDT, rename it to `SSDT-SPPT.aml` and don't forget to compile it to AML format. When you compile the DSL file to AML, the compiler formats text, fills buffer sizes and adds  header with comments.
 
@@ -244,10 +244,13 @@ a6091200022203ae0900002243000008300180000001c00000000000076000000000000000000000
 
 ### OpenCore
 
-You must know the PCI path to the graphics card, it can be done with gfxutil tool or from Hackintool in the PCIe tab >> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M] >> Device Path column >> copy PCI path. In my case is this:<br>
-`PciRoot(0x0)/Pci(0x1.0x0)/Pci(0x0.0x0)/Pci(0x0.0x0)/Pci(0x0.0x0)`
+You must know the PCI path to the graphics card, it can be done with
 
-Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0) and adds the key PP_PhmSoftPowerPlayTable, its value as Data is the long text string.
+- *gfxutil* tool.
+- Hackintool: PCIe tab -> Name of your device (e.g. Navi 23 [Radeon RX 6600/6600 XT/6600M]) -> Device Path column -> Context menu -> Copy PCI path. In my system is:<br>
+`PciRoot(0x0)/Pci(0x1.0x0)/Pci(0x0.0x0)/Pci(0x0.0x0)/Pci(0x0.0x0)`.
+
+Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0)/Pci(0x0,0x0) and adds PP_PhmSoftPowerPlayTable, its value as Data is the long text string.
 
 ![DeviceProperties](Img/DeviceProperties.png)
 
@@ -259,7 +262,7 @@ Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0
 </dict>
 ```
 
-Reboot. If everything goes fine, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 40º and test scores have not changed.
+Reboot. If everything goes fine, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 40º (when there is not high graphics load) and test scores have not changed.
 
 Note: slight errors in the hexadecimal string can lead to a black screen when reaching the Desktop, it is highly recommended to have an EFI that works and can boot macOS on a USB device or another disk in case of problems.
 
@@ -267,9 +270,13 @@ Note: slight errors in the hexadecimal string can lead to a black screen when re
 
 ## April 2023 Note: macOS Ventura 13.4
 
-There are users with macOS Ventura 13.4 who are unable to disable Zero RPM when using the SPPT string. Even with it properly loaded from SSDT or from the OpenCore config.plist file (verifiable using IORegistryExplorer), GPU fans are stopped most of the time and temperature ranges between 50 and 55º (approximately 10º more than in Windows), the same as without SPPT string. This happens most frequently with the SPPT table in config.plist, if the SPPT table is in SSDT it usually works fine.<br>
-There is a way to recover the lost feature. When modifying the vBIOS ROM file in Windows with MorePowerTool, instead of deactivating Zero RPM (unchecking option box), it is left checked but the temperatures at which the fans start and stop are modified. By default they are configured like this: Stop Temperature 50º and Start Temperature 60º.<br>
-I have tried an RX 6600 XT with these settings: Start Temperature to 45º and Stop temperature to 40º. I have written the new registry key and exported it to macOS. With this modification, fans spin and stop with the GPU temperature oscillating between 40 and 45º. GeekBench performance is as expected.
+There are users on macOS Ventura 13.4 who can't disable Zero RPM. Even with it properly loaded from SSDT or from the OpenCore config.plist file (verifiable using IORegistryExplorer), GPU fans are stopped most of the time and temperature ranges between 50 and 55º (approximately 10º more than in Windows), the same as without SPPT string.
+
+There is a way to recover the lost feature. When modifying the vBIOS ROM file in Windows with MorePowerTool, instead of disabling Zero RPM (unchecking option box), it is left checked but the temperatures at which fans start and stop are modified. By default they are configured like this: Stop Temperature 50º and Start Temperature 60º.
+
+I have tried these settings: Start Temperature 40º and Stop temperature 35. With this change, fans spin and stop with the GPU temperature oscillating between 35 and 40º. GeekBench performance is as expected.
+
+<Img title="MorePoweTool" src="Img/MorePoweTool-3.png" alt="" width="500px">
 
 ---
 
