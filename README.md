@@ -215,12 +215,19 @@ If you have added SPPT string with modified Zero RPM, you must see the changes i
 
 ## PHASE 2 ON MACOS: softPowerPlayTable in DeviceProperties
 
-It is another way to bring the SPPT table to macOS as hexadecimal string into DeviceProperties section of config.plist, with the PCI path that corresponds to your graphics card. My personal experience is that the SSDT method always works, both in Monterey, Ventura and Sonoma, however this other method does not always transmit Zero RPM modifications to macOS.
+It's another way to get the SPPT table into macOS as a hexadecimal string to the DeviceProperties section of config.plist, with the PCI path that corresponds to your graphics card. My personal experience is that the SSDT method works as is if the SSDT file is well formed but this method usually needs to add the SSDT-BRG0.aml file to work.
 
-### Making the text
+### Easy method using script
 
-We start from the text file with the keys extracted from the Windows registry.
+- Get one of the REG or TXT files generated in Windows.
+- In the SSDT/Scripts folder is PPT_config-plist.sh
+- Open Terminal and write:<br>
+`sh ./PPT_config-plist.sh <REG-file/TXT>`
+- The output of this command is a long hexadecimal string that must be saved to be used in the config.plist file.
 
+### Manual method
+
+* Get one of the REG or TXT files generated in Windows.
 * Select the block that begins with `“PP_PhmSoftPowerPlayTable”=` deleting the rest of the text.
 * Also delete `«PP_PhmSoftPowerPlayTable»=hex:` leaving only the hexadecimal string made up of several lines.
 * Search and replace:
@@ -261,6 +268,7 @@ Open the config.plist file in DeviceProperties >> Add > PciRoot(0x0)/Pci(0x1,0x0
          <data>Long string, seen as: hexadecimal in PLIST file editors and as Base64 in plain text editors</data>
 </dict>
 ```
+**Important**: Don't forget to add (ACPI folder and config.plist) the SSDT-BRG0.aml file in which you must check the IOReg path to the graphics card as explained above.
 
 Reboot. If everything goes fine, you will see that fans are spinning all the time with a very low sound, base temperature rarely exceeds 40º (when there is not high graphics load) and test scores have not changed.
 
@@ -284,4 +292,4 @@ I have tried these settings: Start Temperature 40º and Stop temperature 35. Wit
 
 * [Igor'sLAB](https://www.igorslab.de/en/) where I have got a lot of information.
 * [TechPowerUp](https://www.techpowerup.com/gpuz/), GPU-Z developers.
-* Anton Sychev ([klich3](https://github.com/klich3)), SSDT method author and `PPT_script.command` script developer.
+* Anton Sychev ([klich3](https://github.com/klich3)), SSDT method, `PPT_script.command` and `PPT_config-plist.sh` scripts developer.
