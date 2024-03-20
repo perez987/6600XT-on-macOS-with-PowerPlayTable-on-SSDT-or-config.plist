@@ -109,7 +109,7 @@ This method allows you to bring a modified SPPT table to macOS to disable or mod
 
 Either of the 3 files must be transformed into a valid hexadecimal string valid for SSDT. This transformation can be done by `PPT_script.command` in a very simple way.
 
-* In theScripts folder, simply double click on `PPT_script.command`.
+* In the Scripts folder, simply double click on `PPT_script.command`.
 * The program will prompt you to drag and drop the file into the Terminal window.
 * You can select REG or TXT file to transform it into a hexadecimal string valid for SSDT.
 * Final text will appear in the Scripts/Result folder. It will have two versions, one in plain text (Results.txt) and the other as DSL (Results.dsl).
@@ -119,7 +119,7 @@ Either of the 3 files must be transformed into a valid hexadecimal string valid 
 
 ### Include the hexadecimal string in the SSDT file
 
-This is the code of a fairly common SSDT used with AMD graphics cards (SAMPLE-NAVI.dsl into SSDT/Samples folder). You can use it as reference.
+This is the code of a fairly common SSDT used with AMD graphics cards (SAMPLE-NAVI.dsl into SSDT folder). You can use it as reference.
 
 ```c++
 DefinitionBlock("", "SSDT", 2, "DRTNIA", "AMDGPU", 0x00001000)
@@ -180,7 +180,7 @@ DefinitionBlock("", "SSDT", 2, "DRTNIA", "AMDGPU", 0x00001000)
 }
 ```
 
-SPPT table must go  right between these comment lines:
+SPPT table must go right between these comment lines:
 
 ```c++
 // Insert your code here
@@ -215,12 +215,12 @@ If you have added SPPT string with modified Zero RPM, you must see the changes i
 
 ## PHASE 2 ON MACOS: softPowerPlayTable in DeviceProperties
 
-It's another way to get the SPPT table into macOS as a hexadecimal string to the DeviceProperties section of config.plist, with the PCI path that corresponds to your graphics card. My personal experience is that the SSDT method works as is if the SSDT file is well formed but this method usually needs to add the SSDT-BRG0.aml file to work.
+It's another way to get the SPPT table into macOS as a hexadecimal string to the DeviceProperties section of config.plist, with the PCI path that corresponds to your graphics card. My personal experience is that the SSDT method works as is if the SSDT file is well formed but this method usually needs to add the SSDT-BRG0.aml file to work (you have it in the SSDT folder).
 
 ### Easy method using script
 
 - Get one of the REG or TXT files generated in Windows.
-- In the SSDT/Scripts folder is PPT_config-plist.sh
+- In the Scripts folder is PPT_config-plist.sh
 - Open Terminal and write:<br>
 `sh ./PPT_config-plist.sh <REG-file/TXT>`
 - The output of this command is a long hexadecimal string that must be saved to be used in the config.plist file.
