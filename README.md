@@ -290,6 +290,6 @@ I have tried these settings: Start Temperature 40º and Stop temperature 35. Wit
 
 ## Thanks
 
-* [Igor'sLAB](https://www.igorslab.de/en/) where I have got a lot of information.
+* [Igor'sLAB](https://www.igorslab.de/en/) which editor-in-chief is Igor Wallossek.
 * [TechPowerUp](https://www.techpowerup.com/gpuz/), GPU-Z developers.
 * Anton Sychev ([klich3](https://github.com/klich3)), SSDT method, `PPT_script.command` and `PPT_config-plist.sh` scripts developer. `PPT_script.command` has its own site as [PPT-table-tool](https://github.com/klich3/PPT-table-tool).
